@@ -35,10 +35,10 @@ export default function myCard(props) {
           </CardOverflow>
           <CardContent sx={{ px: 2 }}>
             <ThemeProvider theme={theme}>
-              <Typography sx={{justifyContent:'center'}}> {props.firstTest} </Typography>
+              <Typography sx={{justifyContent:'center'}}> {props.firstText} </Typography>
             </ThemeProvider>
             <ThemeProvider theme={theme}>
-              <Typography> {props.secondTest} </Typography>
+              <Typography> {props.secondText} </Typography>
             </ThemeProvider>
           </CardContent>
           <Divider />
