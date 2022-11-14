@@ -29,12 +29,10 @@ export default class Buscador extends React.Component {
         <>
           <Grid container direction='row' justifyContent="center">
             <InputComponent
-              skin={0}
               nameLabel={this.props.nameLabel}
               getInput={this.props.recuperarIdInterno}
             />
             <ButtonComponent 
-              skin={0}
               nameButton={this.props.nombreBoton}
               clickBoton={this.props.buscar}
             />

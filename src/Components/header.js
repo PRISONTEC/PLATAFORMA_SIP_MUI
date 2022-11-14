@@ -31,11 +31,18 @@ const ResponsiveHeader = () => {
     }
   };
 
-  const handleCloseMenu = (e,name) => {
+  const handleCloseMenu = (page) => {
+    const navegador=page
     setAnchorEl(null);
-    console.log("ya llegué...",e,name);  
+    if(navegador==='INICIO'){
+      navigate("/");
+    }
+    else if(navegador==='EXTORSIONES'){ 
     navigate("/extorsion");
-  }
+    }else{
+    navigate("/Errorpage");
+    }
+}
 
   return (
     <>
@@ -74,7 +81,7 @@ const ResponsiveHeader = () => {
                   }}
                 >
                   {modules.map((page) => (
-                    <MenuItem key={page} onClick={(e,page)=>{handleCloseMenu(e,page); console.log(page)}}>
+                    <MenuItem key={page} onClick={()=>{handleCloseMenu(page); console.log(page)}}>
                       <ThemeProvider theme={theme}>
                         <Typography textAlign="center" fontSize="13">{page}</Typography>
                       </ThemeProvider>

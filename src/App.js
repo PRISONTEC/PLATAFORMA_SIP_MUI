@@ -1,10 +1,10 @@
 import React from "react";
 import Header from './Components/header';
-import ErrorPage from './Components/modules/errorPage'
+import ErrorPage from './Components/ErrorPage'
 import MainView from './Components/mainView';
 import { StyledEngineProvider } from '@mui/material/styles';
 import ConsultarTransacciones from './Components/modules/ConsultarTransacciones';
-import { createBrowserRouter, Routes,Route,BrowserRouter, Link,useNavigate} from "react-router-dom";
+import { Routes,Route,BrowserRouter, Link} from "react-router-dom";
 
 function App() {
   return (
@@ -12,15 +12,18 @@ function App() {
       <React.StrictMode>
         <BrowserRouter>
           <nav>
-            <Link to="/inicio">  </Link>
             <Link to="/extorsion">  </Link>
             <Link to="/">  </Link>
+            <Link to="/Errorpage">  </Link>
           </nav>
+
         <Routes>
-            <Route path="/" element={<><Header /> <MainView/></>}  />
-            <Route path="/extorsion" element={<><Header /><ConsultarTransacciones /></>} />
-        </Routes>
-       
+            <Route path="/" element={<Header />}>
+              <Route index element={<MainView/>} />
+              <Route path="extorsion/" element={<ConsultarTransacciones />} /> 
+              <Route path="*" element={<ErrorPage />} />             
+            </Route>             
+        </Routes>      
       </BrowserRouter>
       </React.StrictMode>
     </StyledEngineProvider>

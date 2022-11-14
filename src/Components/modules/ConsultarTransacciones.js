@@ -15,7 +15,7 @@ export default class ConsultarTransacciones extends React.Component {
         super(props);
         this.state = {
             loaded: true,
-            ip:"172.16.100.109",
+            ip:"192.237.253.176",
             numeroCelular : null,
             idInterno : null,
             datos: null,

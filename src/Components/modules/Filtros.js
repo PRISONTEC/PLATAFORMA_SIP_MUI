@@ -7,21 +7,8 @@ export default class FiltrarDatos extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        value: '',
-        tema: [        
-          {
-            bt_background: '#ff8808',
-            bt_hover_background: '#ffbf08',
-            lb_textColor:'white'
-          },
-          {
-            bt_background: '#d0ff08',
-            bt_hover_background: '#0fff08',
-            lb_textColor:'black'
-          }
-        ]    
+        value: '', 
     };
-      console.log("skin: ",this.props.skin)
     }
 
     render() {
