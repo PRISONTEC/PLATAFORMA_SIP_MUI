@@ -1,6 +1,6 @@
 import React from 'react';
 import fetchData from '../../share/fetchData';
-import TablaReact from '../TablaReact';
+import TablaReact from '../TablaMui';
 import RadioGroup from '../RadioGroup';
 import LoadingPage from '../Loading';
 import Calendario from '../Calendario';
@@ -15,7 +15,7 @@ export default class ConsultarTransacciones extends React.Component {
         super(props);
         this.state = {
             loaded: true,
-            ip:"192.237.253.176",
+            ip:"172.16.100.109",
             numeroCelular : null,
             idInterno : null,
             datos: null,
@@ -30,86 +30,58 @@ export default class ConsultarTransacciones extends React.Component {
             fechaCalendarioSecundarioFinal:null,
             columnasLlamadas:[                                                 
                 {
-                    Header: "idInterno",
-                    accessor: "idInterno",
-                    maxWidth: 110,
-                    minWidth: 110,
-                    width: 110,
-                },
-                {
-                    Header: "Número de Destino",
-                    accessor: "numeroCelular",
-                    maxWidth: 110,
-                    minWidth: 110,
-                    width: 110,
-                },
-                {
-                    Header: "fechaHora",
-                    accessor: "fechaHora",
-                    maxWidth: 220,
-                    minWidth: 220,
-                    width: 220,
-                },
-                {
-                    Header: "fechaHoraInicio",
-                    accessor: "fechaHoraInicio",
-                    maxWidth: 220,
-                    minWidth: 220,
-                    width: 220,
-                },
-                {
-                    Header: "fechaHoraFin",
-                    accessor: "fechaHoraFin",
-                    maxWidth: 220,
-                    minWidth: 220,
-                    width: 220,
-                },
-                {
-                    Header: "duracion",
-                    accessor: "duracion",
-                    maxWidth: 110,
-                    minWidth: 110,
-                    width: 110,
-                },
+                    width: 400,
+                    label: 'CODIGO',
+                    dataKey: 'idInterno',
+                  },
+                  {
+                    width: 450,
+                    label: 'DESTINO',
+                    dataKey: 'numeroCelular',
+                  },
+                  {
+                    width: 350,
+                    label: 'FECHA',
+                    dataKey: 'fechaHora',
+                  },
+                  {
+                    width: 350,
+                    label: 'INICIO',
+                    dataKey: 'fechaHoraInicio',
+                  },
+                  {
+                    width: 350,
+                    label: 'FIN',
+                    dataKey: 'fechaHoraFin',
+                  },
 
             ],
             columnasRecargas:[                                                 
                 {
-                    Header: "idInterno",
-                    accessor: "idInterno",
-                    maxWidth: 110,
-                    minWidth: 110,
-                    width: 110,
-                },
-                {
-                    Header: "numeroCelular",
-                    accessor: "numeroCelular",
-                    maxWidth: 110,
-                    minWidth: 110,
-                    width: 110,
-                },
-                {
-                    Header: "fechaHora",
-                    accessor: "fechaHora",
-                    maxWidth: 110,
-                    minWidth: 110,
-                    width: 110,
-                },
-                {
-                    Header: "metodo",
-                    accessor: "metodo",
-                    maxWidth: 110,
-                    minWidth: 110,
-                    width: 110,
-                },
-                {
-                    Header: "monto",
-                    accessor: "monto",
-                    maxWidth: 110,
-                    minWidth: 110,
-                    width: 110,
-                }
-
+                    width: 400,
+                    label: 'CODIGO',
+                    dataKey: 'idInterno',
+                  },
+                  {
+                    width: 450,
+                    label: 'CELULAR',
+                    dataKey: 'numeroCelular',
+                  },
+                  {
+                    width: 350,
+                    label: 'FECHA',
+                    dataKey: 'fechaHora',
+                  },
+                  {
+                    width: 250,
+                    label: 'METODO',
+                    dataKey: 'metodo',
+                  },
+                  {
+                    width: 300,
+                    label: 'MONTO',
+                    dataKey: 'monto',
+                  },
             ]
         }
 
@@ -334,7 +306,7 @@ export default class ConsultarTransacciones extends React.Component {
                                 <Calendario recuperarFechaCalendario={this.recuperarFechaCalendarioFinal}  fechaCalendarioSecundario={this.state.fechaCalendarioSecundarioFinal}></Calendario> 
                             </FiltrarDatos>
                         
-                            <Grid >
+                            <Grid item xs={12}>
                                 {this.state.mostrarTabla==="recargas" &&
                                     <TablaReact columnas={this.state.columnasRecargas} datos={this.state.recargas}/>}
                                 {this.state.mostrarTabla==="llamadas" &&
