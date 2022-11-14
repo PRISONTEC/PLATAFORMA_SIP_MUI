@@ -2,6 +2,7 @@ import { Grid } from '@material-ui/core';
 import React from 'react';
 import ButtonComponent from './ButtonComponent';
 import InputComponent from './InputComponent';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default class Buscador extends React.Component {
     constructor(props) {
@@ -35,6 +36,7 @@ export default class Buscador extends React.Component {
             <ButtonComponent 
               nameButton={this.props.nombreBoton}
               clickBoton={this.props.buscar}
+              icon={<SearchIcon/>}              
             />
           </Grid>
         </>

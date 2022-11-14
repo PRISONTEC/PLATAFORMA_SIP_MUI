@@ -2,6 +2,7 @@ import React from 'react';
 import Input from '../InputComponent';
 import Button from '../ButtonComponent';
 import {Grid} from '@material-ui/core';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 export default class FiltrarDatos extends React.Component {
     constructor(props) {
@@ -33,6 +34,7 @@ export default class FiltrarDatos extends React.Component {
               <Button skin={1} 
                 nameButton={"Filtrar"}
                 clickBoton={this.props.buscar}
+                icon={<FilterAltIcon/>}
                 />
           </Grid>
           </Grid>
