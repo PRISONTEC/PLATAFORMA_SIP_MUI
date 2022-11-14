@@ -1,0 +1,29 @@
+*{
+    margin:0px;
+    padding:0px
+}
+
+div#general{
+    border: solid #ff8808;
+    border-radius: 5px;
+    width : 15vw;
+    margin-top: 0px;
+    top : 2px;
+    left : 5px;
+    position : relative;    
+    float: left;
+    /*background-color:red;*/
+}
+
+div#hijo{
+    
+    width:100px;
+    position : relative;
+    float: left;
+    /*background-color:yellow;*/
+}
+
+p#parrafo{
+    color: black;
+}
+
