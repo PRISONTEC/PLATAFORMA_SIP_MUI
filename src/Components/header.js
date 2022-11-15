@@ -17,6 +17,7 @@ const theme = createTheme({
   typography: {
     fontFamily: ['PT Serif', 'serif'].join(","),
     fontSize: 13,
+    textAlign:"center"
   },
 });
 
@@ -32,6 +33,7 @@ const ResponsiveHeader = () => {
 
   const handleCloseMenu = (page) => {
     const navegador=page
+    console.log("vavegador.........",navegador)
     setAnchorEl(null);
     if(navegador==='INICIO'){
       navigate("/");
@@ -41,6 +43,11 @@ const ResponsiveHeader = () => {
     }else{
     navigate("/Errorpage");
     }
+}
+
+const handleClose = () => {
+  setAnchorEl(null);
+  
 }
 
   return (
@@ -74,7 +81,7 @@ const ResponsiveHeader = () => {
                     horizontal: 'left',
                   }}
                   open={Boolean(anchorEl)}
-                  onClose={handleCloseMenu}
+                  onClose={handleClose}
                   sx={{
                     display: { xs: 'block', md: 'flex' },
                   }}
@@ -82,14 +89,14 @@ const ResponsiveHeader = () => {
                   {modules.map((page) => (
                     <MenuItem key={page} onClick={()=>{handleCloseMenu(page); console.log(page)}}>
                       <ThemeProvider theme={theme}>
-                        <Typography fontSize="13">{page}</Typography>
+                        <Typography textAlign="center" fontSize="13">{page}</Typography>
                       </ThemeProvider>
                     </MenuItem>
                   ))}
                 </Menu>
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, justifyContent: 'center', pt: '11px' }}>
                   <Typography 
-                     style={{color: 'blue'}}> INTELIGENCIA PENITENCIARIA
+                    textAlign="center" style={{color: 'blue'}}> INTELIGENCIA PENITENCIARIA
                   </Typography>
                 </Box>
               </Box>
