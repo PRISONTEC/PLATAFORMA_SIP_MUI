@@ -36,7 +36,7 @@ export default class Buscador extends React.Component {
             <ButtonComponent 
               nameButton={this.props.nombreBoton}
               clickBoton={this.props.buscar}
-              icon={<SearchIcon/>}              
+              icon={<SearchIcon/>}
             />
           </Grid>
         </>

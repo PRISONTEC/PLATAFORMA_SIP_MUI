@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import { withStyles } from '@material-ui/core/styles';
 
 // We can inject some CSS into the DOM.
@@ -21,9 +21,11 @@ function ClassNames(props) {
   const { classes, children, className, ...other } = props;
 
   return (
-    <Button onClick={props.clickBoton} className={clsx(classes.root, className) }{...other}>
+    <Button 
+        endIcon={props.icon}
+        onClick={props.clickBoton} 
+        className={clsx(classes.root, className) }{...other}>
       {props.nameButton || 'button'}
-      {props.icon}
     </Button>
   );
 }

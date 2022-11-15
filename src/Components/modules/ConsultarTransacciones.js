@@ -7,10 +7,8 @@ import Calendario from '../Calendario';
 import  "../../assets/css/Calendario.css";
 import FiltrarDatos from './Filtros';
 import Buscador from '../Buscardor';
-import {Grid} from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import {Grid} from '@material-ui/core'
+import Box from '@mui/material/Box';
 
 export default class ConsultarTransacciones extends React.Component { 
     
@@ -23,7 +21,6 @@ export default class ConsultarTransacciones extends React.Component {
             idInterno : null,
             datos: null,
             mostrarTabla:null,
-            openFilter:false,
             llamadas:[],
             recargas:[],
             fechaCalendarioInicio:null,
@@ -184,7 +181,7 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     botonAplicarFiltro(){
-        this.setState({openFilter:false});
+        console.log("por aqui...........",this.state.datos.items);
         this.aplicandoFiltroPorInterno(this.state.datos.items);        
     }
 
@@ -271,7 +268,8 @@ export default class ConsultarTransacciones extends React.Component {
         if (this.state.loaded === true) {
             return (
                 <>
-                    <div>
+                    <Box sx={{mt:2}}>
+                        <Box sx={{mt:2}}>
                             <Grid container  justifyContent="flex-end" alignItems="center">
                                 <Grid item xs={12} sm={6} md={4}>
                                 <Buscador nombreLabel="Interno"
@@ -298,35 +296,27 @@ export default class ConsultarTransacciones extends React.Component {
                                 </Grid>
 
                             </Grid>
-                            <Grid container>                            
-                            <Grid item xs={12}>
-                            <IconButton aria-label="expand row" 
-                                size="small" 
-                                onClick={() => this.setState({openFilter:!this.state.openFilter})} >
-                                {this.state.openFilter ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                                Click para aplicar filtros
-                            </IconButton>                            
-                            </Grid>
-                            </Grid>
-                            {this.state.openFilter && <FiltrarDatos 
-                                buscar={this.botonAplicarFiltro}
-                                valueIdInterno={this.state.idInterno}
-                                recuperarIdInternoFiltro={this.recuperarIdInternoFiltro}
-                                recuperarDestinoFiltro={this.recuperarDestinoFiltro}
-                                >
+                        </Box>
+                        <FiltrarDatos 
+                            buscar={this.botonAplicarFiltro}
+                            valueIdInterno={this.state.idInterno}
+                            recuperarIdInternoFiltro={this.recuperarIdInternoFiltro}
+                            recuperarDestinoFiltro={this.recuperarDestinoFiltro}
+                        >
                                 <p id="parrafo">Fecha Inicio</p>
                                 <Calendario recuperarFechaCalendario={this.recuperarFechaCalendarioInicio} fechaCalendarioSecundario={this.state.fechaCalendarioSecundarioInicio} ></Calendario>                     
                                 <p id="parrafo">Fecha Final</p>
                                 <Calendario recuperarFechaCalendario={this.recuperarFechaCalendarioFinal}  fechaCalendarioSecundario={this.state.fechaCalendarioSecundarioFinal}></Calendario> 
-                            </FiltrarDatos>}
-                        
-                            <Grid item xs={12}>
-                                {this.state.mostrarTabla==="recargas" &&
-                                    <TablaReact columnas={this.state.columnasRecargas} datos={this.state.recargas}/>}
-                                {this.state.mostrarTabla==="llamadas" &&
-                                    <TablaReact columnas={this.state.columnasLlamadas} datos={this.state.llamadas}/>}
-                            </Grid>
-                    </div> 
+                        </FiltrarDatos>
+                        <Box>                        
+                        <Grid item xs={12}>
+                            {this.state.mostrarTabla==="recargas" &&
+                                <TablaReact columnas={this.state.columnasRecargas} datos={this.state.recargas}/>}
+                            {this.state.mostrarTabla==="llamadas" &&
+                                <TablaReact columnas={this.state.columnasLlamadas} datos={this.state.llamadas}/>}
+                        </Grid>
+                        </Box>
+                    </Box> 
                 </>
             );
     } else {

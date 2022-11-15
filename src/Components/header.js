@@ -33,6 +33,7 @@ const ResponsiveHeader = () => {
 
   const handleCloseMenu = (page) => {
     const navegador=page
+    console.log("vavegador.........",navegador)
     setAnchorEl(null);
     if(navegador==='INICIO'){
       navigate("/");
@@ -42,6 +43,11 @@ const ResponsiveHeader = () => {
     }else{
     navigate("/Errorpage");
     }
+}
+
+const handleClose = () => {
+  setAnchorEl(null);
+  
 }
 
   return (
@@ -75,7 +81,7 @@ const ResponsiveHeader = () => {
                     horizontal: 'left',
                   }}
                   open={Boolean(anchorEl)}
-                  onClose={handleCloseMenu}
+                  onClose={handleClose}
                   sx={{
                     display: { xs: 'block', md: 'flex' },
                   }}
