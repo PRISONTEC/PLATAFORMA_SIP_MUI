@@ -3,11 +3,11 @@ import fetchData from '../../share/fetchData';
 import TablaReact from '../TablaMui';
 import RadioGroup from '../RadioGroup';
 import LoadingPage from '../Loading';
-import Calendario from '../Calendario';
 import  "../../assets/css/Calendario.css";
+import Calendario from '../Calendario';
 import FiltrarDatos from './Filtros';
 import Buscador from '../Buscardor';
-import {Grid} from '@material-ui/core'
+import {Grid} from '@material-ui/core';
 import Box from '@mui/material/Box';
 
 export default class ConsultarTransacciones extends React.Component { 
@@ -16,11 +16,12 @@ export default class ConsultarTransacciones extends React.Component {
         super(props);
         this.state = {
             loaded: true,
-            ip:"172.16.100.109",
+            ip:"192.237.253.176",
             numeroCelular : null,
             idInterno : null,
             datos: null,
             mostrarTabla:null,
+            openFilter:false,
             llamadas:[],
             recargas:[],
             fechaCalendarioInicio:null,
@@ -181,7 +182,7 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     botonAplicarFiltro(){
-        console.log("por aqui...........",this.state.datos.items);
+        this.setState({openFilter:false});
         this.aplicandoFiltroPorInterno(this.state.datos.items);        
     }
 
@@ -243,7 +244,10 @@ export default class ConsultarTransacciones extends React.Component {
         })
         this.setState({
             recargas:recargas,
-            llamadas:llamadas,           
+            llamadas:llamadas,  
+            filtrarPorInterno:null,
+            filtrarPorDestino:null, 
+            filtrarDatosPorFechaSeleccionada:null,        
             loaded: true,
         });
 
@@ -303,10 +307,14 @@ export default class ConsultarTransacciones extends React.Component {
                             recuperarIdInternoFiltro={this.recuperarIdInternoFiltro}
                             recuperarDestinoFiltro={this.recuperarDestinoFiltro}
                         >
-                                <p id="parrafo">Fecha Inicio</p>
-                                <Calendario recuperarFechaCalendario={this.recuperarFechaCalendarioInicio} fechaCalendarioSecundario={this.state.fechaCalendarioSecundarioInicio} ></Calendario>                     
-                                <p id="parrafo">Fecha Final</p>
-                                <Calendario recuperarFechaCalendario={this.recuperarFechaCalendarioFinal}  fechaCalendarioSecundario={this.state.fechaCalendarioSecundarioFinal}></Calendario> 
+                            <p id="parrafo">Fecha Inicio</p>
+                                <Calendario 
+                                    recuperarFechaCalendario={this.recuperarFechaCalendarioInicio} 
+                                    fechaCalendarioSecundario={this.state.fechaCalendarioSecundarioInicio} />                     
+                            <p id="parrafo">Fecha Final</p>
+                                <Calendario 
+                                    recuperarFechaCalendario={this.recuperarFechaCalendarioFinal} 
+                                    fechaCalendarioSecundario={this.state.fechaCalendarioSecundarioFinal}/>                           
                         </FiltrarDatos>
                         <Box>                        
                         <Grid item xs={12}>
