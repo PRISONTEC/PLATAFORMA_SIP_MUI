@@ -11,7 +11,7 @@ import { Outlet, useNavigate} from "react-router-dom";
 import { createTheme, ThemeProvider, Typography } from "@material-ui/core";
 
 
-const modules = ['INICIO','EXTORSIONES'];
+const modules = ['INICIO','BUSQUEDA POR INTERNO','BUSQUEDA POR CELULAR'];
 
 const theme = createTheme({
   typography: {
@@ -21,7 +21,7 @@ const theme = createTheme({
   },
 });
 
-const ResponsiveHeader = () => {
+const ResponsiveHeader = (props) => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
@@ -32,16 +32,19 @@ const ResponsiveHeader = () => {
   };
 
   const handleCloseMenu = (page) => {
-    const navegador=page
+    const navegador=page    
     console.log("vavegador.........",navegador)
     setAnchorEl(null);
     if(navegador==='INICIO'){
       navigate("/");
-    }
-    else if(navegador==='EXTORSIONES'){ 
-    navigate("/extorsion");
-    }else{
-    navigate("/Errorpage");
+    } else if(navegador==='BUSQUEDA POR INTERNO'){
+      props.elijeBusqueda("interno"); 
+      navigate("/extorsion");
+    } else if(navegador==='BUSQUEDA POR CELULAR'){
+      props.elijeBusqueda("celular"); 
+      navigate("/extorsion");
+    } else{
+      navigate("/Errorpage");
     }
 }
 
@@ -87,7 +90,7 @@ const handleClose = () => {
                   }}
                 >
                   {modules.map((page) => (
-                    <MenuItem key={page} onClick={()=>{handleCloseMenu(page); console.log(page)}}>
+                    <MenuItem key={page} onClick={()=>{handleCloseMenu(page)}}>
                       <ThemeProvider theme={theme}>
                         <Typography textAlign="center" fontSize="13">{page}</Typography>
                       </ThemeProvider>

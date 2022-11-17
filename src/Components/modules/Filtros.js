@@ -1,9 +1,10 @@
 import React from 'react';
-import Input from '../InputComponent';
+//import Input from '../InputComponent';
 import Button from '../ButtonComponent';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import {Grid} from '@material-ui/core';
+import Calendario from '../CalendarioMui';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
@@ -31,29 +32,34 @@ export default class FiltrarDatos extends React.Component {
             </Grid>
           </Box>
           {this.state.openFilter && 
-            <Box>
-              <Grid container justifyContent="flex-end" alignItems="center"> 
-                <Grid item xs={12} sm={6} md={3}>         
-                  <Input skin={0} 
-                    nameLabel={"Filtrar por ID"}
-                    getInput={this.props.recuperarIdInternoFiltro}
+            <Box sx={{ml:2}}>
+              <Grid container justifyContent="center" alignItems="center">                
+                <Grid item xs={12} sm={6} md={4}>
+                  <Box sx={{mt:2}}>              
+                    <Calendario 
+                        recuperarFechaCalendario= {this.props.recuperarFechaCalendarioInicio}
+                        fechaCalendarioSecundario = {this.props.fechaCalendarioSecundarioInicio}
+                        tituloCalendario={this.props.tituloCalendarioInicio}
+                      />
+                  </Box>                     
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Box sx={{mt:2}}> 
+                    <Calendario 
+                        recuperarFechaCalendario= {this.props.recuperarFechaCalendarioFinal}
+                        fechaCalendarioSecundario = {this.props.fechaCalendarioSecundarioFinal}
+                        tituloCalendario={this.props.tituloCalendarioFinal}
+                      />
+                  </Box> 
+                </Grid>
+                <Grid item xs={12} sm={12} md={4}>
+                  <Box sx={{mt:2}}> 
+                    <Button  
+                      nameButton={"Filtrar"}
+                      clickBoton={this.props.buscar}
+                      icon={<FilterAltIcon/>}
                     />
-                </Grid> 
-                <Grid item xs={12} sm={6} md={3}>
-                      <Input skin={1} 
-                        nameLabel={"Filtrar por Destino"}
-                        getInput={this.props.recuperarDestinoFiltro}
-                        />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                      {this.props.children}
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  <Button skin={1} 
-                    nameButton={"Filtrar"}
-                    clickBoton={this.props.buscar}
-                    icon={<FilterAltIcon/>}
-                  />
+                  </Box>
                 </Grid>
               </Grid>
             </Box>

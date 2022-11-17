@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import Header from './Components/header';
 import ErrorPage from './Components/ErrorPage'
 import MainView from './Components/mainView';
@@ -7,6 +7,8 @@ import ConsultarTransacciones from './Components/modules/ConsultarTransacciones'
 import { Routes,Route,BrowserRouter, Link} from "react-router-dom";
 
 function App() {
+  const [seleccion,seleccionar] = useState("interno");
+  console.log("seleccion: ", seleccion);
   return (
     <StyledEngineProvider injectFirst>
       <React.StrictMode>
@@ -18,9 +20,9 @@ function App() {
           </nav>
 
         <Routes>
-            <Route path="/" element={<Header />}>
+            <Route path="/" element={<Header elijeBusqueda={(callback)=>seleccionar(callback)}/>}>
               <Route index element={<MainView/>} />
-              <Route path="extorsion/" element={<ConsultarTransacciones />} /> 
+              <Route path="extorsion/" element={<ConsultarTransacciones buscarPor={seleccion}/>} /> 
               <Route path="*" element={<ErrorPage />} />             
             </Route>             
         </Routes>      

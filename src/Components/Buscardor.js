@@ -12,7 +12,6 @@ export default class Buscador extends React.Component {
     };
       this.handleChange = this.handleChange.bind(this);
       this.clickBoton = this.clickBoton.bind(this);
-      console.log("skin: ",this.props.skin)
     }
     //actualiza el dato ingresado 
     handleChange(event) {

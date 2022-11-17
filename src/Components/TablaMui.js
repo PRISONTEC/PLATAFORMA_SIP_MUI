@@ -156,8 +156,6 @@ const VirtualizedTable = styled(MuiVirtualizedTable)(styles);
 export default function ReactVirtualizedTable(props) {
 const rows= props.datos;
 const columnas = props.columnas;
-console.log("filas..........",rows);
-console.log("columnas..........",columnas)
   return (
     <Paper style={{ height: 400, width: '100%' }}>
       <VirtualizedTable
