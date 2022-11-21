@@ -27,8 +27,8 @@ export default function RowCard() {
   return (
     <Box sx={{display: { xs: 'flex', md: 'flex' }, flexDirection:'column', justifyContent:'center', pt:'20px' }}>
       <MyCard colorCard={colorBlueCard1} colorIcon={colorPurpleCard1} firstText={"28"} secondText={"PENALES"} statusImage={AccountBalanceIcon}/>
-      <MyCard colorCard={colorBlueCard2} colorIcon={colorPurpleCard2} firstText={"50K"} secondText={"INTERNOS"} statusImage={AssignmentIndIcon}/>
-      <MyCard colorCard={colorBlueCard3} colorIcon={colorPurpleCard3} firstText={"25M"} secondText={"LLAMADAS"} statusImage={RingVolumeIcon}/>
+      <MyCard colorCard={colorBlueCard2} colorIcon={colorPurpleCard2} firstText={"50252"} secondText={"INTERNOS"} statusImage={AssignmentIndIcon}/>
+      <MyCard colorCard={colorBlueCard3} colorIcon={colorPurpleCard3} firstText={"25756236"} secondText={"LLAMADAS"} statusImage={RingVolumeIcon}/>
       <MyCard colorCard={colorBlueCard4} colorIcon={colorPurpleCard4} firstText={"1500"} secondText={"TELEFONOS ANALIZADOS"} statusImage={PhoneIcon}/>
     </Box>
   );

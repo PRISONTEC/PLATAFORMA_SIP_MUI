@@ -8,6 +8,11 @@ import { Routes,Route,BrowserRouter, Link} from "react-router-dom";
 
 function App() {
   const [seleccion,seleccionar] = useState("interno");
+  const [infoInterno, setInfoInterno] = useState(null);
+  const modificarValores = (buscarPor,nombreInterno) => {
+    seleccionar(buscarPor);
+    setInfoInterno(nombreInterno);
+  }
   console.log("seleccion: ", seleccion);
   return (
     <StyledEngineProvider injectFirst>
@@ -20,9 +25,12 @@ function App() {
           </nav>
 
         <Routes>
-            <Route path="/" element={<Header elijeBusqueda={(callback)=>seleccionar(callback)}/>}>
+            <Route path="/" element={<Header elijeBusquedaYactulizaNombre={modificarValores}/>}>
               <Route index element={<MainView/>} />
-              <Route path="extorsion/" element={<ConsultarTransacciones buscarPor={seleccion}/>} /> 
+              <Route path="extorsion/" element={<ConsultarTransacciones 
+                                                  buscarPor={seleccion}
+                                                  infoInternoSeleccionado={infoInterno}  
+                                                  actualizarInfoInterno={(callback)=>setInfoInterno(callback)}/>} /> 
               <Route path="*" element={<ErrorPage />} />             
             </Route>             
         </Routes>      

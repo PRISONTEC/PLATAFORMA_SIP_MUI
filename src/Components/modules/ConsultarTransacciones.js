@@ -8,6 +8,7 @@ import FiltrarDatos from './Filtros';
 import Buscador from '../Buscardor';
 import {Grid} from '@material-ui/core';
 import Box from '@mui/material/Box';
+import Typography from "@mui/material/Typography";
 
 export default class ConsultarTransacciones extends React.Component { 
     
@@ -16,6 +17,10 @@ export default class ConsultarTransacciones extends React.Component {
         this.state = {
             loaded: true,
             ip:"172.16.100.109",
+            indiceTocadoEnTablaLlamadas:null,
+            indiceTocadoEnTablaRecargas:null,
+            infoInternos:[{idInterno:"48339906",nombres:"gustavo sandoval palacios"},
+                {idInterno:"48060600",nombres:"miguel altamirano mego"}],
             numeroCelular : null,
             idInterno : null,
             datos: null,
@@ -28,7 +33,12 @@ export default class ConsultarTransacciones extends React.Component {
             actualizarFechaEnElComponenteHijo:true,
             fechaCalendarioSecundarioInicio:null,
             fechaCalendarioSecundarioFinal:null,
-            columnasLlamadas:[                                                 
+            columnasLlamadas:[     
+                  {
+                    width: 250,
+                    label: 'INDEX',
+                    dataKey: 'index',
+                  },                                            
                   {
                     width: 400,
                     label: 'INTERNO',
@@ -54,10 +64,15 @@ export default class ConsultarTransacciones extends React.Component {
                     label: 'FIN',
                     dataKey: 'fechaHoraFin',
                   },
-
+                  
             ],
-            columnasRecargas:[                                                 
-                {
+            columnasRecargas:[  
+                  {
+                    width: 250,
+                    label: 'INDEX',
+                    dataKey: 'index',
+                  },                                               
+                  {
                     width: 400,
                     label: 'INTERNO',
                     dataKey: 'idInterno',
@@ -84,7 +99,7 @@ export default class ConsultarTransacciones extends React.Component {
                   },
             ]
         }
-        console.log("props: ",props.buscarPor," state: ",this.state.mostrarBusquedaPor);
+        //console.log("props: ",props.buscarPor," state: ",this.state.mostrarBusquedaPor);
         this.obtenerTransaccionPorCelular = this.obtenerTransaccionPorCelular.bind(this)
         this.obtenerTransaccionPorInterno = this.obtenerTransaccionPorInterno.bind(this)
         this.cargarDatosDeInterno = this.cargarDatosDeInterno.bind(this)
@@ -97,7 +112,19 @@ export default class ConsultarTransacciones extends React.Component {
         this.recuperarFechaCalendarioFinal=this.recuperarFechaCalendarioFinal.bind(this)
         this.filtrarDatosPorFechaSeleccionada=this.filtrarDatosPorFechaSeleccionada.bind(this)
         this.botonAplicarFiltro=this.botonAplicarFiltro.bind(this)
+        this.recuperarIndiceTocadoEnTablaRecargas = this.recuperarIndiceTocadoEnTablaRecargas.bind(this)
+        this.recuperarIndiceTocadoEnTablaLlamadas = this.recuperarIndiceTocadoEnTablaLlamadas.bind(this)
+        this.insertarNombres = this.insertarNombres.bind(this)
+        this.obtenerNombreDeInterno = this.obtenerNombreDeInterno.bind(this);
     }
+    /*componentDidMount(){
+        this.setState({loaded : false})
+        this.obtenerNombresInternos(data=>{
+            this.setState({infoInternos:data});
+        });
+        this.setState({loaded : true})
+    }*/
+
     // con este callback se actuliza la variable desde el hijo "Buscador"
     recuperarIdInterno(callback){
         this.setState({
@@ -143,6 +170,38 @@ export default class ConsultarTransacciones extends React.Component {
         }
     }
 
+    // obteniendo nombres de internos
+    recuperarIndiceTocadoEnTablaRecargas(callback){
+        console.log("indice transacciones: ",callback)
+        this.setState({indiceTocadoEnTablaRecargas:callback});
+        this.obtenerNombreDeInterno(callback,this.state.recargas)
+    }
+    recuperarIndiceTocadoEnTablaLlamadas(callback){
+        console.log("indice transacciones: ",callback)
+        this.setState({indiceTocadoEnTablaLlamadas:callback});
+        this.obtenerNombreDeInterno(callback,this.state.llamadas)
+    }
+
+    obtenerNombreDeInterno(index,datos){
+        datos.every((dato)=>{
+            if(dato.index===index){
+                this.obtenerTransaccionPorNombreInterno((info) => {
+                    try{
+                        console.log("Nombre: " + String(info.items[0].nombres))
+                        this.props.actualizarInfoInterno("Nombre: " + String(info.items[0].nombres))
+  
+                    } catch(e) {
+                        console.log(e)
+                        this.props.actualizarInfoInterno("No se encontró coincidencia...")
+                    }         
+                },dato.idInterno)  
+                         
+                return false
+            }
+            return true;
+        })
+    }
+
     // para actulizar la fecha desde aqui hacia los hijos
     // para controlar que solo lo haga una vez y no en bucle infinito(true o false)
     funcionActualizarFecha(callback){
@@ -181,6 +240,20 @@ export default class ConsultarTransacciones extends React.Component {
         })                     
     }
 
+    insertarNombres(datos){
+        var datosConNombres=[];
+        datos.forEach((dato)=>{
+            this.state.infoInternos.every((interno)=>{
+                if(interno.idInterno===dato.idInterno){
+                    dato.nombres = interno.nombres;
+                    datosConNombres.push(dato);
+                    return false;
+                }
+                return true;
+            })
+        })
+    }
+
     botonAplicarFiltro(){
         this.setState({openFilter:false});
         this.filtrarDatosPorFechaSeleccionada(this.state.datos.items);        
@@ -193,7 +266,7 @@ export default class ConsultarTransacciones extends React.Component {
         var menorFechaInicioDeConsultaDeBdd=Date.parse("3970-01-01");
         var mayorFechaInicioDeConsultaDeBdd=Date.parse("1970-01-01");
         var datosPorFecha=[];
-        datosParaFiltar.forEach((dato)=>{
+        datosParaFiltar.forEach((dato)=>{            
             var fechaInterna=Date.parse(dato.fechaHora)
             //obtener la mayor fecha de la consulta
             if(fechaInterna > mayorFechaInicioDeConsultaDeBdd){
@@ -233,11 +306,17 @@ export default class ConsultarTransacciones extends React.Component {
     separarRecargasDeLlamadas(datos){
         var recargas = [];
         var llamadas = [];
+        var indiceLlamadas= -1;
+        var indiceRecargas= -1;
         datos.forEach((dato)=>{
             if (dato.duracion){
+                indiceLlamadas=indiceLlamadas+1;
+                dato.index=indiceLlamadas;
                 llamadas.push(dato)
             }
             if (dato.monto){
+                indiceRecargas=indiceRecargas+1;
+                dato.index=indiceRecargas
                 recargas.push(dato)
             }
         })
@@ -252,8 +331,15 @@ export default class ConsultarTransacciones extends React.Component {
 
     }
 
+    obtenerTransaccionPorNombreInterno(callback, idInterno) {
+        console.log("idInterno: ", idInterno)
+        fetchData.getData("http://"+this.state.ip +":2500",
+            "/SIP/byKeyNombre?idInterno="+ idInterno,
+            callback
+        )
+    }
+
     obtenerTransaccionPorCelular(callback) {
-        console.log("obtenerTransaccionPorCelular: ",this.state.numeroCelular);
         fetchData.getData("http://"+this.state.ip +":2500",
             "/SIP/byKeyCelular?numeroCelular="+ this.state.numeroCelular,
             callback
@@ -261,7 +347,6 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     obtenerTransaccionPorInterno(callback) {
-        console.log("idInterno: ",this.state.idInterno)
         fetchData.getData("http://"+this.state.ip +":2500",
             "/SIP/byKeyInterno?idInterno=" + this.state.idInterno,
             callback
@@ -273,6 +358,11 @@ export default class ConsultarTransacciones extends React.Component {
                 <>
                     <Box sx={{mt:2}}>
                         <Box sx={{mt:2}}>
+                            <Box sx={{ml:3}}>
+                                <Typography variant='p1' fontFamily='Arial'></Typography>
+                                {this.props.buscarPor==="interno"? <p1> BUSQUEDA POR INTERNO</p1>:<p1></p1>}
+                                {this.props.buscarPor==="celular"? <p1> BUSQUEDA POR DESTINO</p1>:<p1></p1>}
+                            </Box>
                             <Grid container  justifyContent="flex-end" alignItems="center">
                                 {
                                     this.props.buscarPor==="interno" &&
@@ -316,12 +406,27 @@ export default class ConsultarTransacciones extends React.Component {
                             fechaCalendarioSecundarioFinal={this.state.fechaCalendarioFinal}
                             tituloCalendarioFinal={"Fecha Final"}
                         />
+                        {this.props.infoInternoSeleccionado && 
+                            <Box sx={{m:2, textTransform: 'capitalize'}}>
+                                <Typography variant='p1' fontFamily='Arial'>{String(this.props.infoInternoSeleccionado)}</Typography>
+                                
+                            </Box>
+                        }
                         <Box>                        
                         <Grid item xs={12}>
                             {this.state.mostrarTabla==="recargas" &&
-                                <TablaReact columnas={this.state.columnasRecargas} datos={this.state.recargas}/>}
+                                <TablaReact 
+                                    columnas={this.state.columnasRecargas} 
+                                    datos={this.state.recargas}
+                                    recuperarIndice={this.recuperarIndiceTocadoEnTablaRecargas}
+                                />
+                            }
                             {this.state.mostrarTabla==="llamadas" &&
-                                <TablaReact columnas={this.state.columnasLlamadas} datos={this.state.llamadas}/>}
+                                <TablaReact 
+                                    columnas={this.state.columnasLlamadas} 
+                                    datos={this.state.llamadas}
+                                    recuperarIndice={this.recuperarIndiceTocadoEnTablaLlamadas}
+                                    />}
                         </Grid>
                         </Box>
                     </Box> 

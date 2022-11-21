@@ -6,6 +6,7 @@ import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
 import IconButton from '@mui/material/IconButton';
+import CountUp from 'react-countup';
 import { createTheme, ThemeProvider, Typography } from "@material-ui/core";
 
 export default function myCard(props) {
@@ -35,7 +36,7 @@ export default function myCard(props) {
           </CardOverflow>
           <CardContent sx={{ px: 2 }}>
             <ThemeProvider theme={theme}>
-              <Typography sx={{justifyContent:'center'}}> {props.firstText} </Typography>
+            <Typography sx={{justifyContent:'center'}}> <CountUp end={props.firstText} /> </Typography>
             </ThemeProvider>
             <ThemeProvider theme={theme}>
               <Typography> {props.secondText} </Typography>

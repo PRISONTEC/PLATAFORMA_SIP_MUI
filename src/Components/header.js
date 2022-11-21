@@ -38,10 +38,10 @@ const ResponsiveHeader = (props) => {
     if(navegador==='INICIO'){
       navigate("/");
     } else if(navegador==='BUSQUEDA POR INTERNO'){
-      props.elijeBusqueda("interno"); 
+      props.elijeBusquedaYactulizaNombre("interno",null); 
       navigate("/extorsion");
     } else if(navegador==='BUSQUEDA POR CELULAR'){
-      props.elijeBusqueda("celular"); 
+      props.elijeBusquedaYactulizaNombre("celular",null); 
       navigate("/extorsion");
     } else{
       navigate("/Errorpage");
@@ -99,7 +99,7 @@ const handleClose = () => {
                 </Menu>
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, justifyContent: 'center', pt: '11px' }}>
                   <Typography 
-                    textAlign="center" style={{color: 'blue'}}> INTELIGENCIA PENITENCIARIA
+                    textAlign="center" style={{color: 'blue'}}> SISTEMA DE INTELIGENCIA PENITENCIARIA
                   </Typography>
                 </Box>
               </Box>

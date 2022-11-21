@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import { styled } from '@mui/material/styles';
 import TableCell from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@mui/icons-material/Info';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
 const classes = {
@@ -47,22 +49,32 @@ const styles = ({ theme }) => ({
 });
 
 class MuiVirtualizedTable extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openFilter: false,
+      indexRow:-1,
+    }; 
+    
+    this.cellRenderer= this.cellRenderer.bind(this);
+  }
   static defaultProps = {
     headerHeight: 48,
     rowHeight: 100,
+    indexProps:null  
   };
-
-  getRowClassName = ({ index }) => {
+  
+  getRowClassName = ({ index,rowCount }) => { 
     const { onRowClick } = this.props;
-
     return clsx(classes.tableRow, classes.flexContainer, {
       [classes.tableRowHover]: index !== -1 && onRowClick != null,
     });
   };
 
-  cellRenderer = ({ cellData, columnIndex }) => {
-    const { columns, rowHeight, onRowClick } = this.props;
+  cellRenderer = ({ cellData, columnIndex }) => {    
+    const { columns, rowHeight, onRowClick} = this.props; 
     return (
+      <>      
       <TableCell
         component="div"
         className={clsx(classes.tableCell, classes.flexContainer, {
@@ -75,9 +87,26 @@ class MuiVirtualizedTable extends React.PureComponent {
             ? 'right'
             : 'left'
         }
-      >
+      >        
+        {(columnIndex===0) &&          
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={()=>{                          
+                          this.setState({
+                              openFilter:!this.state.openFilter,
+                              indexRow:cellData
+                          });
+                      this.props.recuperarIndice(cellData)
+                    }}
+          >                   
+          {this.state.openFilter && this.state.indexRow===Number(cellData) ? <InfoIcon /> : <InfoIcon />}
+        </IconButton>
+        }
+             
         {cellData}
       </TableCell>
+      </>
     );
   };
 
@@ -129,7 +158,8 @@ class MuiVirtualizedTable extends React.PureComponent {
                   {...other}
                 />
               );
-            })}
+            })}        
+
           </Table>
         )}
       </AutoSizer>
@@ -153,13 +183,13 @@ MuiVirtualizedTable.propTypes = {
 
 const VirtualizedTable = styled(MuiVirtualizedTable)(styles);
 
-export default function ReactVirtualizedTable(props) {
+export default function HolaReactVirtualizedTable(props) {
 const rows= props.datos;
 const columnas = props.columnas;
   return (
     <Paper style={{ height: 400, width: '100%' }}>
       <VirtualizedTable
-        
+        recuperarIndice = {props.recuperarIndice}
         rowCount={rows.length}
         rowGetter={({ index }) => rows[index]}
         columns={columnas}
