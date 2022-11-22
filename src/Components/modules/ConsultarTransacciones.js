@@ -16,11 +16,10 @@ export default class ConsultarTransacciones extends React.Component {
         super(props);
         this.state = {
             loaded: true,
-            ip:"172.16.100.109",
+            ip:"192.237.253.176",
             indiceTocadoEnTablaLlamadas:null,
             indiceTocadoEnTablaRecargas:null,
-            infoInternos:[{idInterno:"48339906",nombres:"gustavo sandoval palacios"},
-                {idInterno:"48060600",nombres:"miguel altamirano mego"}],
+            infoInternos:[],
             numeroCelular : null,
             idInterno : null,
             datos: null,
@@ -187,8 +186,8 @@ export default class ConsultarTransacciones extends React.Component {
             if(dato.index===index){
                 this.obtenerTransaccionPorNombreInterno((info) => {
                     try{
-                        console.log("Nombre: " + String(info.items[0].nombres))
-                        this.props.actualizarInfoInterno("Nombre: " + String(info.items[0].nombres))
+                        console.log("NOMBRE: " + String(info.items[0].nombres))
+                        this.props.actualizarInfoInterno("NOMBRE: " + String(info.items[0].nombres))
   
                     } catch(e) {
                         console.log(e)
@@ -358,12 +357,17 @@ export default class ConsultarTransacciones extends React.Component {
                 <>
                     <Box sx={{mt:2}}>
                         <Box sx={{mt:2}}>
-                            <Box sx={{ml:3}}>
-                                <Typography variant='p1' fontFamily='Arial'></Typography>
-                                {this.props.buscarPor==="interno"? <p1> BUSQUEDA POR INTERNO</p1>:<p1></p1>}
-                                {this.props.buscarPor==="celular"? <p1> BUSQUEDA POR DESTINO</p1>:<p1></p1>}
+                            <Box sx={{m:2}}>
+                                <Grid container direction="row" justifyContent="center" alignItems="center">
+                                    <Grid item>
+                                        <Typography variant='p1' fontFamily='sans-serif' color='#5798F6' fontWeight='bold'>
+                                            {this.props.buscarPor==="interno"? <p1> BUSQUEDA POR INTERNO</p1>:<p1></p1>}
+                                            {this.props.buscarPor==="celular"? <p1> BUSQUEDA POR DESTINO</p1>:<p1></p1>}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
                             </Box>
-                            <Grid container  justifyContent="flex-end" alignItems="center">
+                            <Grid container  justifyContent="center" alignItems="center">
                                 {
                                     this.props.buscarPor==="interno" &&
                                     <Grid item xs={12} sm={6} md={6}>
@@ -386,7 +390,7 @@ export default class ConsultarTransacciones extends React.Component {
                                             buscar={this.cargarDatosNumeroCelular}/>
                                     </Grid>
                                 }
-                                <Grid item xs={12} sm={6} md={6}>
+                                <Grid item xs={12} sm={4} md={4}>
                                 <RadioGroup                         
                                     lista={["llamadas","recargas"]}
                                     iniciarConItem={this.state.mostrarTabla} 
@@ -408,7 +412,7 @@ export default class ConsultarTransacciones extends React.Component {
                         />
                         {this.props.infoInternoSeleccionado && 
                             <Box sx={{m:2, textTransform: 'capitalize'}}>
-                                <Typography variant='p1' fontFamily='Arial'>{String(this.props.infoInternoSeleccionado)}</Typography>
+                                <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.props.infoInternoSeleccionado)}</Typography>
                                 
                             </Box>
                         }
