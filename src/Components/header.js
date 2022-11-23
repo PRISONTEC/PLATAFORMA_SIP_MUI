@@ -11,7 +11,7 @@ import { Outlet, useNavigate} from "react-router-dom";
 import { createTheme, ThemeProvider, Typography } from "@material-ui/core";
 
 
-const modules = ['INICIO','BUSQUEDA POR INTERNO','BUSQUEDA POR CELULAR'];
+const modules = ['INICIO','BUSQUEDA POR INTERNO','BUSQUEDA POR DESTINO'];
 
 const theme = createTheme({
   typography: {
@@ -38,10 +38,10 @@ const ResponsiveHeader = (props) => {
     if(navegador==='INICIO'){
       navigate("/");
     } else if(navegador==='BUSQUEDA POR INTERNO'){
-      props.elijeBusquedaYactulizaNombre("interno",null); 
+      props.elijeBusquedaYactulizaNombre("interno",null,null); 
       navigate("/extorsion");
-    } else if(navegador==='BUSQUEDA POR CELULAR'){
-      props.elijeBusquedaYactulizaNombre("celular",null); 
+    } else if(navegador==='BUSQUEDA POR DESTINO'){
+      props.elijeBusquedaYactulizaNombre("celular",null,null); 
       navigate("/extorsion");
     } else{
       navigate("/Errorpage");

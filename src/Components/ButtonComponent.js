@@ -12,7 +12,8 @@ const styles = {
     border: 0,
     color: 'white',
     height: 48,
-    padding: '0 30px',
+    weight:20,
+    padding: '0 10px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   },
 };
@@ -25,7 +26,7 @@ function ClassNames(props) {
         endIcon={props.icon}
         onClick={props.clickBoton} 
         className={clsx(classes.root, className) }{...other}>
-      {props.nameButton || 'button'}
+      {props.nameButton || ''}
     </Button>
   );
 }

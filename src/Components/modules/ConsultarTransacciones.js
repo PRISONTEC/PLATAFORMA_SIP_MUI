@@ -9,6 +9,8 @@ import Buscador from '../Buscardor';
 import {Grid} from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography";
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 export default class ConsultarTransacciones extends React.Component { 
     
@@ -20,8 +22,12 @@ export default class ConsultarTransacciones extends React.Component {
             indiceTocadoEnTablaLlamadas:null,
             indiceTocadoEnTablaRecargas:null,
             infoInternos:[],
-            numeroCelular : null,
-            idInterno : null,
+            numeroCelular : "013119898",
+            idInterno : "44252489",
+            penal:{101:"CAÑETE",102:"HUARAL",103:"CALLAO",104:"ICA",105:"CHINCHA",106:"HUACHO",107:"ANCON 2",108:"CASTRO",109:"ANCON",
+                110:"LURIGANCHO",111:"TRUJILLO",112:"CHIMBOTE",113:"HUARAZ",114:"CHICLAYO",115:"TUMBES",116:"AYACUCHO",117:"HUANCAYO",118:"HUANUCO",
+                119:"CAJAMARCA",120:"CHANCHAMAYO",121:"CHORRILLOS",122:"CUSCO",123:"PUERTO MALDONADO",124:"TACNA",125:"PUNO",126:"JULIACA",127:"TARAPOTO",
+                128:"MOYOBAMBA",129:"CHACHAPOYAS"},
             datos: null,
             mostrarTabla:null,
             openFilter:false,
@@ -34,17 +40,17 @@ export default class ConsultarTransacciones extends React.Component {
             fechaCalendarioSecundarioFinal:null,
             columnasLlamadas:[     
                   {
-                    width: 250,
-                    label: 'INDEX',
+                    width: 200,
+                    label: 'N°',
                     dataKey: 'index',
                   },                                            
                   {
-                    width: 400,
+                    width: 350,
                     label: 'INTERNO',
                     dataKey: 'idInterno',
                   },
                   {
-                    width: 450,
+                    width: 350,
                     label: 'DESTINO',
                     dataKey: 'numeroCelular',
                   },
@@ -55,13 +61,8 @@ export default class ConsultarTransacciones extends React.Component {
                   },
                   {
                     width: 350,
-                    label: 'INICIO',
-                    dataKey: 'fechaHoraInicio',
-                  },
-                  {
-                    width: 350,
-                    label: 'FIN',
-                    dataKey: 'fechaHoraFin',
+                    label: 'DURACION',
+                    dataKey: 'duracion',
                   },
                   
             ],
@@ -115,15 +116,8 @@ export default class ConsultarTransacciones extends React.Component {
         this.recuperarIndiceTocadoEnTablaLlamadas = this.recuperarIndiceTocadoEnTablaLlamadas.bind(this)
         this.insertarNombres = this.insertarNombres.bind(this)
         this.obtenerNombreDeInterno = this.obtenerNombreDeInterno.bind(this);
+        this.secondsToString = this.secondsToString.bind(this);
     }
-    /*componentDidMount(){
-        this.setState({loaded : false})
-        this.obtenerNombresInternos(data=>{
-            this.setState({infoInternos:data});
-        });
-        this.setState({loaded : true})
-    }*/
-
     // con este callback se actuliza la variable desde el hijo "Buscador"
     recuperarIdInterno(callback){
         this.setState({
@@ -175,6 +169,7 @@ export default class ConsultarTransacciones extends React.Component {
         this.setState({indiceTocadoEnTablaRecargas:callback});
         this.obtenerNombreDeInterno(callback,this.state.recargas)
     }
+
     recuperarIndiceTocadoEnTablaLlamadas(callback){
         console.log("indice transacciones: ",callback)
         this.setState({indiceTocadoEnTablaLlamadas:callback});
@@ -186,12 +181,14 @@ export default class ConsultarTransacciones extends React.Component {
             if(dato.index===index){
                 this.obtenerTransaccionPorNombreInterno((info) => {
                     try{
-                        console.log("NOMBRE: " + String(info.items[0].nombres))
-                        this.props.actualizarInfoInterno("NOMBRE: " + String(info.items[0].nombres))
+                        console.log(String(info.items[0].nombres))
+                        this.props.actualizarInfoInterno(String(info.items[0].nombres))
+                        this.props.actualizarInfoPenal(String(this.state.penal[info.items[0].prefijoPenal]))                        
   
                     } catch(e) {
                         console.log(e)
                         this.props.actualizarInfoInterno("No se encontró coincidencia...")
+                        this.props.actualizarInfoPenal(null)
                     }         
                 },dato.idInterno)  
                          
@@ -214,7 +211,8 @@ export default class ConsultarTransacciones extends React.Component {
             loaded : false,            
             actualizarFechaEnElComponenteHijo: true,
             fechaCalendarioInicio: null,
-            fechaCalendarioFinal: null
+            fechaCalendarioFinal: null,
+            idInterno:null
         });
         this.obtenerTransaccionPorInterno((data) => {
             this.setState({
@@ -229,7 +227,8 @@ export default class ConsultarTransacciones extends React.Component {
             loaded : false,
             actualizarFechaEnElComponenteHijo: true,
             fechaCalendarioInicio: null,
-            fechaCalendarioFinal: null
+            fechaCalendarioFinal: null,
+            numeroCelular: null
         });
         this.obtenerTransaccionPorCelular((data) => { 
             this.setState({
@@ -258,6 +257,16 @@ export default class ConsultarTransacciones extends React.Component {
         this.filtrarDatosPorFechaSeleccionada(this.state.datos.items);        
     }
 
+    secondsToString(seconds) {
+        var hour = Math.floor(seconds / 3600);
+        hour = (hour < 10)? '0' + hour : hour;
+        var minute = Math.floor((seconds / 60) % 60);
+        minute = (minute < 10)? '0' + minute : minute;
+        var second = seconds % 60;
+        second = (second < 10)? '0' + second : second;
+        return hour + ':' + minute + ':' + second;
+      }
+
     filtrarDatosPorFechaSeleccionada(datosParaFiltar){
         var CaleSecInicio=Date.parse(this.state.fechaCalendarioInicio);
         var CaleSecFin=Date.parse(this.state.fechaCalendarioFinal);
@@ -266,7 +275,21 @@ export default class ConsultarTransacciones extends React.Component {
         var mayorFechaInicioDeConsultaDeBdd=Date.parse("1970-01-01");
         var datosPorFecha=[];
         datosParaFiltar.forEach((dato)=>{            
-            var fechaInterna=Date.parse(dato.fechaHora)
+            var fechaInterna=Date.parse(dato.fechaHora);
+            try {
+                var inicio=Date.parse(dato.fechaHoraInicio);
+                var fin=Date.parse(dato.fechaHoraFin);
+                if(isNaN(inicio) || isNaN(fin)){
+                    dato.duracion = "00:00:00";
+                    datosPorFecha.push(dato.duracion);
+                } else {                    
+                    dato.duracion = this.secondsToString((fin-inicio)/1000);
+                    datosPorFecha.push(dato.duracion);
+                }
+            } catch {
+                dato.duracion = "00:00:00";
+                datosPorFecha.push(dato.duracion)
+            }
             //obtener la mayor fecha de la consulta
             if(fechaInterna > mayorFechaInicioDeConsultaDeBdd){
                 mayorFechaInicioDeConsultaDeBdd=fechaInterna;
@@ -296,7 +319,7 @@ export default class ConsultarTransacciones extends React.Component {
             this.setState({
                 fechaCalendarioInicio:(new Date(menorFechaInicioDeConsultaDeBdd)).toISOString(),
                 fechaCalendarioFinal:(new Date(mayorFechaInicioDeConsultaDeBdd)).toISOString(),
-                actualizarFechaEnElComponenteHijo:false
+                actualizarFechaEnElComponenteHijo:false,                
             });
         }
         this.separarRecargasDeLlamadas(datosPorFecha);                    
@@ -372,9 +395,9 @@ export default class ConsultarTransacciones extends React.Component {
                                     this.props.buscarPor==="interno" &&
                                     <Grid item xs={12} sm={6} md={6}>
                                         <Buscador nombreLabel="Interno"
-                                                nombreBoton="Buscar" 
-                                                nameLabel={"por identificación de interno"}
-                                                valueIdInterno={this.state.idInterno}
+                                                valorDefault={this.state.idInterno}
+                                                nombreBoton="" 
+                                                nameLabel={"ID Interno"}
                                                 recuperarIdInterno={this.recuperarIdInterno}
                                                 buscar={this.cargarDatosDeInterno}/>
                                     </Grid>
@@ -383,16 +406,16 @@ export default class ConsultarTransacciones extends React.Component {
                                     this.props.buscarPor==="celular" &&
                                     <Grid item xs={12} sm={6} md={6}>
                                         <Buscador nombreLabel="Celular"
-                                            nombreBoton="Buscar" 
-                                            nameLabel={"por número celular"}
-                                            valueIdInterno={this.state.idInterno}
+                                            valorDefault={this.state.numeroCelular}
+                                            nombreBoton="" 
+                                            nameLabel={"por número destino"}
                                             recuperarIdInterno={this.recuperarNumeroCelular}
                                             buscar={this.cargarDatosNumeroCelular}/>
                                     </Grid>
                                 }
                                 <Grid item xs={12} sm={4} md={4}>
                                 <RadioGroup                         
-                                    lista={["llamadas","recargas"]}
+                                    lista={["llamadas"]}
                                     iniciarConItem={this.state.mostrarTabla} 
                                     itemSeleccionado={this.recuperarRadioGroupSeleccionado}
                                     />
@@ -411,9 +434,15 @@ export default class ConsultarTransacciones extends React.Component {
                             tituloCalendarioFinal={"Fecha Final"}
                         />
                         {this.props.infoInternoSeleccionado && 
-                            <Box sx={{m:2, textTransform: 'capitalize'}}>
-                                <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.props.infoInternoSeleccionado)}</Typography>
-                                
+                            <Box sx={{justifyContent: 'center'}}>
+                                <Box sx={{m:2, textTransform: 'capitalize',flexDirection: 'row',display: 'flex',justifyContent: 'center'}}>
+                                    <AccountBalanceIcon/>                  
+                                    <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.props.infoPenalSeleccionado)}</Typography>
+                                </Box> 
+                                <Box sx={{m:2, textTransform: 'capitalize',flexDirection: 'row',display: 'flex',justifyContent: 'center'}}>
+                                    <AccessibilityNewIcon/>  
+                                    <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.props.infoInternoSeleccionado)}</Typography>
+                                </Box>
                             </Box>
                         }
                         <Box>                        

@@ -19,6 +19,12 @@ export default function myCard(props) {
           textAlign:"center"
         },
       });
+
+    const numeroToString = (numb) => {
+      var str = numb.toString().split(".");
+      str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return str.join(".");
+    }
   
     return (
       <Box sx={{display: { xs: 'flex', md: 'flex' }, direction:'column', justifyContent:'center', pt:'15px' }}>
@@ -36,7 +42,7 @@ export default function myCard(props) {
           </CardOverflow>
           <CardContent sx={{ px: 2 }}>
             <ThemeProvider theme={theme}>
-            <Typography sx={{justifyContent:'center'}}> <CountUp end={props.firstText} /> </Typography>
+            <Typography sx={{justifyContent:'center'}}> <CountUp end={props.firstText}  separator="," /> </Typography>
             </ThemeProvider>
             <ThemeProvider theme={theme}>
               <Typography> {props.secondText} </Typography>

@@ -1,8 +1,10 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
 import ButtonComponent from './ButtonComponent';
+import iconButton from './IconComponent'
 import InputComponent from './InputComponent';
 import SearchIcon from '@mui/icons-material/Search';
+import IconComponent from './IconComponent';
 
 export default class Buscador extends React.Component {
     constructor(props) {
@@ -31,11 +33,10 @@ export default class Buscador extends React.Component {
             <InputComponent
               nameLabel={this.props.nameLabel}
               getInput={this.props.recuperarIdInterno}
+              valorDefault={this.props.valorDefault}
             />
-            <ButtonComponent 
-              nameButton={this.props.nombreBoton}
-              clickBoton={this.props.buscar}
-              icon={<SearchIcon/>}             
+            <IconComponent
+              clickBoton={this.props.buscar}            
             />
           </Grid>
         </>

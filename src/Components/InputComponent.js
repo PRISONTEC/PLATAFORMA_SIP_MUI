@@ -1,11 +1,12 @@
 import React from 'react';
-import TextField from '@mui/material/TextField'
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 export default class FiltrarDatos extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        value: ''  
+        value: props.valorDefault  
     };
       this.handleChange = this.handleChange.bind(this);
     }
@@ -18,17 +19,18 @@ export default class FiltrarDatos extends React.Component {
   
     render() {
       return (
-        <>
-            <TextField               
+        <Box sx={{width: 150}}>        
+            <TextField 
+                fullWidth={true}             
                 type="text" 
                 value={this.state.value} 
                 onChange={this.handleChange}
                 label={this.props.nameLabel}
-                variant="filled" 
+                required
                 color="success" 
                 focused >
             </TextField> 
-        </>
+        </Box>
       );
     }
   }

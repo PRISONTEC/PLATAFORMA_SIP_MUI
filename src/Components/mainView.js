@@ -3,8 +3,8 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import PhoneIcon from '@mui/icons-material/Phone';
 import RingVolumeIcon from '@mui/icons-material/RingVolume';
+import BoxPt from './BoxPt'
 import Box from '@mui/material/Box';
-
 import { blue, purple } from '@mui/material/colors';
 
 import MyCard from "./cardsMainViews/cards"
@@ -25,11 +25,12 @@ const colorPurpleCard4 = purple[700];
 export default function RowCard() {
 
   return (
-    <Box sx={{display: { xs: 'flex', md: 'flex' }, flexDirection:'column', justifyContent:'center', pt:'20px' }}>
-      <MyCard colorCard={colorBlueCard1} colorIcon={colorPurpleCard1} firstText={"28"} secondText={"PENALES"} statusImage={AccountBalanceIcon}/>
-      <MyCard colorCard={colorBlueCard2} colorIcon={colorPurpleCard2} firstText={"50252"} secondText={"INTERNOS"} statusImage={AssignmentIndIcon}/>
-      <MyCard colorCard={colorBlueCard3} colorIcon={colorPurpleCard3} firstText={"25756236"} secondText={"LLAMADAS"} statusImage={RingVolumeIcon}/>
-      <MyCard colorCard={colorBlueCard4} colorIcon={colorPurpleCard4} firstText={"1500"} secondText={"TELEFONOS ANALIZADOS"} statusImage={PhoneIcon}/>
-    </Box>
+        <Box sx={{display: { xs: 'flex', md: 'flex' }, flexDirection:'column', justifyContent:'center', pt:'20px' }}>
+          <MyCard colorCard={colorBlueCard1} colorIcon={colorPurpleCard1} firstText={"28"} secondText={"PENALES"} statusImage={AccountBalanceIcon}/>
+          <MyCard colorCard={colorBlueCard2} colorIcon={colorPurpleCard2} firstText={"50252"} secondText={"INTERNOS"} statusImage={AssignmentIndIcon}/>
+          <MyCard colorCard={colorBlueCard3} colorIcon={colorPurpleCard3} firstText={"25756236"} secondText={"LLAMADAS"} statusImage={RingVolumeIcon}/>
+          <MyCard colorCard={colorBlueCard4} colorIcon={colorPurpleCard4} firstText={"1627"} secondText={"TELEFONOS ANALIZADOS"} statusImage={PhoneIcon}/>
+               
+        </Box>   
   );
 }

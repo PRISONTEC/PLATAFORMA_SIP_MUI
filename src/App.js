@@ -8,10 +8,12 @@ import { Routes,Route,BrowserRouter, Link} from "react-router-dom";
 
 function App() {
   const [seleccion,seleccionar] = useState("interno");
+  const [infoPenal,setInfoPenal] = useState("")
   const [infoInterno, setInfoInterno] = useState(null);
-  const modificarValores = (buscarPor,nombreInterno) => {
+  const modificarValores = (buscarPor,nombreInterno,penal) => {
     seleccionar(buscarPor);
     setInfoInterno(nombreInterno);
+    setInfoPenal(penal)
   }
   console.log("seleccion: ", seleccion);
   return (
@@ -29,7 +31,9 @@ function App() {
               <Route index element={<MainView/>} />
               <Route path="extorsion/" element={<ConsultarTransacciones 
                                                   buscarPor={seleccion}
-                                                  infoInternoSeleccionado={infoInterno}  
+                                                  infoInternoSeleccionado={infoInterno} 
+                                                  infoPenalSeleccionado={infoPenal}
+                                                  actualizarInfoPenal={(callback)=>setInfoPenal(callback)} 
                                                   actualizarInfoInterno={(callback)=>setInfoInterno(callback)}/>} /> 
               <Route path="*" element={<ErrorPage />} />             
             </Route>             
