@@ -17,7 +17,7 @@ function App() {
   }
   console.log("seleccion: ", seleccion);
   return (
-    <StyledEngineProvider injectFirst>
+    
       <React.StrictMode>
         <BrowserRouter>
           <nav>
@@ -40,7 +40,6 @@ function App() {
         </Routes>      
       </BrowserRouter>
       </React.StrictMode>
-    </StyledEngineProvider>
   );
 }
 

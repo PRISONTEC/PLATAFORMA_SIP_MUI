@@ -1,59 +1,45 @@
-import React from "react";
+import React,{useState} from "react";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import { createTheme, ThemeProvider, Typography } from "@mui/material";
 
 
 // pasar como parametro la lista de items => lista={["item1","item2"]}
 // pasar la función callback para modificar el item seleccionado en el father
-export default class RadioGroupNew extends React.Component{
-  constructor(props){
-    super(props);
-    if(this.props.iniciarConItem){
-      this.state = {
-        select: this.props.iniciarConItem
-      };
-    } else {
-      this.state = {
-        select: this.props.lista[0]
-      };
-      this.props.itemSeleccionado(this.props.lista[0]);
-    }
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-  }
+export default function RadioGroupNew(props){
+ /* const themeRadio = createTheme({
+    typography: {
+      fontFamily: ['Montserrat', 'sans-serif'].join(","),
+      fontSize: 18,
+      textAlign:"center",
+    },
+  });
 
-  handleSelectChange (event) {    
+  const handleSelectChange =(event) => {       
     const value = event.target.value;
-    this.props.itemSeleccionado(value);
-    this.setState({select:value});
-  };
-  render(){
+    console.log("value radioGroup: ", value); 
+    //props.itemSeleccionado(value);
+  };*/
     return (
-      <>
-        <FormControl>
-        <FormLabel id="demo-radio-buttons-group-label">{/*this.props.name*/}</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            value={this.state.select}
-            name="radio-buttons-group"
-          > 
-            { this.props.lista.map((elemento,i) => {
-              return(
-                <FormControlLabel key={i}
-                  value={elemento} 
-                  control={<Radio />} 
-                  label={elemento}
-                  onChange={event => this.handleSelectChange(event)} 
-                />
-              );}            
-            )
-            }          
-          </RadioGroup>
-        </FormControl>      
-      </>
+      <FormControl>
+        
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="controlled-radio-buttons-group"
+          value={"llamadas"}
+        >
+          <FormControlLabel value="llamadas" control={<Radio />} 
+          label={
+            <Typography sx={{ fontSize: 16 ,fontFamily:'sans-serif'}}>
+              Llamadas
+            </Typography>
+          }
+          />
+        </RadioGroup>
+      </FormControl>
     );
   }
-};
+
 

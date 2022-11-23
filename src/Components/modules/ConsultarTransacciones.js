@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography";
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export default class ConsultarTransacciones extends React.Component { 
     
@@ -21,6 +22,8 @@ export default class ConsultarTransacciones extends React.Component {
             ip:"192.237.253.176",
             indiceTocadoEnTablaLlamadas:null,
             indiceTocadoEnTablaRecargas:null,
+            cantRecargas:null,
+            cantLlamadas:null,
             infoInternos:[],
             numeroCelular : "013119898",
             idInterno : "44252489",
@@ -29,7 +32,7 @@ export default class ConsultarTransacciones extends React.Component {
                 119:"CAJAMARCA",120:"CHANCHAMAYO",121:"CHORRILLOS",122:"CUSCO",123:"PUERTO MALDONADO",124:"TACNA",125:"PUNO",126:"JULIACA",127:"TARAPOTO",
                 128:"MOYOBAMBA",129:"CHACHAPOYAS"},
             datos: null,
-            mostrarTabla:null,
+            mostrarTabla:"llamadas",
             openFilter:false,
             llamadas:[],
             recargas:[],
@@ -342,9 +345,12 @@ export default class ConsultarTransacciones extends React.Component {
                 recargas.push(dato)
             }
         })
+        console.log("cantidad de llamadas: ", indiceLlamadas);
         this.setState({
             recargas:recargas,
-            llamadas:llamadas,  
+            llamadas:llamadas,
+            cantLlamadas:indiceLlamadas===-1?null:indiceLlamadas,
+            cantRecargas:indiceRecargas===-1?null:indiceRecargas,             
             filtrarPorInterno:null,
             filtrarPorDestino:null, 
             filtrarDatosPorFechaSeleccionada:null,        
@@ -383,7 +389,7 @@ export default class ConsultarTransacciones extends React.Component {
                             <Box sx={{m:2}}>
                                 <Grid container direction="row" justifyContent="center" alignItems="center">
                                     <Grid item>
-                                        <Typography variant='p1' fontFamily='sans-serif' color='#5798F6' fontWeight='bold'>
+                                        <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>
                                             {this.props.buscarPor==="interno"? <p1> BUSQUEDA POR INTERNO</p1>:<p1></p1>}
                                             {this.props.buscarPor==="celular"? <p1> BUSQUEDA POR DESTINO</p1>:<p1></p1>}
                                         </Typography>
@@ -433,6 +439,11 @@ export default class ConsultarTransacciones extends React.Component {
                             fechaCalendarioSecundarioFinal={this.state.fechaCalendarioFinal}
                             tituloCalendarioFinal={"Fecha Final"}
                         />
+                        {this.state.cantLlamadas && 
+                        <Box sx={{justifyContent: 'center',display: 'flex'}}>
+                            <VisibilityIcon/>
+                            <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.state.cantLlamadas)}</Typography>
+                        </Box>}
                         {this.props.infoInternoSeleccionado && 
                             <Box sx={{justifyContent: 'center'}}>
                                 <Box sx={{m:2, textTransform: 'capitalize',flexDirection: 'row',display: 'flex',justifyContent: 'center'}}>

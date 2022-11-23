@@ -8,14 +8,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Outlet, useNavigate} from "react-router-dom";
-import { createTheme, ThemeProvider, Typography } from "@material-ui/core";
+import { createTheme, ThemeProvider, Typography } from  "@mui/material";
 
 
 const modules = ['INICIO','BUSQUEDA POR INTERNO','BUSQUEDA POR DESTINO'];
 
 const theme = createTheme({
   typography: {
-    fontFamily: ['PT Serif', 'serif'].join(","),
+    fontFamily: ['Monserrat', 'sans-serif'].join(","),
     fontSize: 13,
     textAlign:"center"
   },
