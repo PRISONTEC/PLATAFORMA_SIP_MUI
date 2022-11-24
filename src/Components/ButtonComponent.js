@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '@mui/material/Button';
 import { withStyles } from '@material-ui/core/styles';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 // We can inject some CSS into the DOM.
 const styles = {
@@ -22,12 +23,14 @@ function ClassNames(props) {
   const { classes, children, className, ...other } = props;
 
   return (
-    <Button 
-        endIcon={props.icon}
-        onClick={props.clickBoton} 
-        className={clsx(classes.root, className) }{...other}>
-      {props.nameButton || ''}
-    </Button>
+    <StyledEngineProvider injectFirst>
+      <Button          
+          onClick={props.clickBoton} 
+          className={clsx(classes.root, className) }{...other}>
+        {props.nameButton || ''}
+        {props.icon}
+      </Button>
+    </StyledEngineProvider>
   );
 }
 
