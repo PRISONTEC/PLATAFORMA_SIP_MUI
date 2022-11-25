@@ -140,7 +140,7 @@ export default class ConsultarTransacciones extends React.Component {
 
     recuperarFechaCalendarioInicio(callback){
         if(callback!==null){
-        var fecha_formateada=callback.substr(0,10)
+        var fecha_formateada=callback
         this.setState({
             fechaCalendarioInicio:fecha_formateada,
             fechaCalendarioSecundarioInicio:fecha_formateada
@@ -154,7 +154,7 @@ export default class ConsultarTransacciones extends React.Component {
 
     recuperarFechaCalendarioFinal(callback){
         if(callback!==null){
-        var fecha_formateada=callback.substr(0,10)      
+        var fecha_formateada=callback      
         this.setState({
             fechaCalendarioFinal:fecha_formateada,
             fechaCalendarioSecundarioFinal:fecha_formateada
@@ -210,35 +210,41 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     cargarDatosDeInterno(){
-        this.setState({
-            loaded : false,            
-            actualizarFechaEnElComponenteHijo: true,
-            fechaCalendarioInicio: null,
-            fechaCalendarioFinal: null,
-            idInterno:null
-        });
-        this.obtenerTransaccionPorInterno((data) => {
+        if(this.state.idInterno){
             this.setState({
-                datos: data,
+                loaded : false,            
+                actualizarFechaEnElComponenteHijo: true,
+                fechaCalendarioInicio: null,
+                fechaCalendarioFinal: null,
+                idInterno:null
+            });
+    
+            this.obtenerTransaccionPorInterno((data) => {
+                this.setState({
+                    datos: data,
+                })
+                this.filtrarDatosPorFechaSeleccionada(data.items)
             })
-            this.filtrarDatosPorFechaSeleccionada(data.items)
-        })                     
+        }                     
     }
 
     cargarDatosNumeroCelular(){
-        this.setState({
-            loaded : false,
-            actualizarFechaEnElComponenteHijo: true,
-            fechaCalendarioInicio: null,
-            fechaCalendarioFinal: null,
-            numeroCelular: null
-        });
-        this.obtenerTransaccionPorCelular((data) => { 
+        if(this.state.numeroCelular){
             this.setState({
-                datos: data,                
-            })
-            this.filtrarDatosPorFechaSeleccionada(data.items)
-        })                     
+                loaded : false,
+                actualizarFechaEnElComponenteHijo: true,
+                fechaCalendarioInicio: null,
+                fechaCalendarioFinal: null,
+                numeroCelular: null
+            });
+                this.obtenerTransaccionPorCelular((data) => { 
+                    this.setState({
+                        datos: data,                
+                    })
+                    this.filtrarDatosPorFechaSeleccionada(data.items)
+
+                })
+        } 
     }
 
     insertarNombres(datos){
@@ -257,7 +263,11 @@ export default class ConsultarTransacciones extends React.Component {
 
     botonAplicarFiltro(){
         this.setState({openFilter:false});
-        this.filtrarDatosPorFechaSeleccionada(this.state.datos.items);        
+        try{
+            this.filtrarDatosPorFechaSeleccionada(this.state.datos.items); 
+        }catch{
+            console.log("sin datos")
+        }       
     }
 
     secondsToString(seconds) {
@@ -271,14 +281,42 @@ export default class ConsultarTransacciones extends React.Component {
       }
 
     filtrarDatosPorFechaSeleccionada(datosParaFiltar){
-        var CaleSecInicio=Date.parse(this.state.fechaCalendarioInicio);
-        var CaleSecFin=Date.parse(this.state.fechaCalendarioFinal);
+        console.log("this.state.fechaCalendarioInicio",this.state.fechaCalendarioInicio)
+        console.log("this.state.fechaCalendarioFinal",this.state.fechaCalendarioFinal)
+
+        if (this.state.fechaCalendarioInicio!=null && this.state.fechaCalendarioFinal===null){
+            var CaleSecFin=Date.parse(this.state.fechaCalendarioFinal)
+            var fechaInicio=new Date(this.state.fechaCalendarioInicio)
+            fechaInicio=(fechaInicio.getFullYear())+"-"+(("0" + (fechaInicio.getMonth() + 1)).slice(-2))+"-"+(("0" + (fechaInicio.getDate())).slice(-2))
+            var CaleSecInicio=Date.parse(fechaInicio);
+
+
+        }else if(this.state.fechaCalendarioInicio===null && this.state.fechaCalendarioFinal!=null){
+            var CaleSecInicio=Date.parse(this.state.fechaCalendarioInicio)
+            var fechaFin=new Date(this.state.fechaCalendarioFinal)
+            fechaFin=(fechaFin.getFullYear())+"-"+(("0" + (fechaFin.getMonth() + 1)).slice(-2))+"-"+(("0" + (fechaFin.getDate())).slice(-2))
+            var CaleSecFin=Date.parse(fechaFin);
+
+        }else if(this.state.fechaCalendarioInicio!=null && this.state.fechaCalendarioFinal!=null){
+            var fechaInicio=new Date(this.state.fechaCalendarioInicio)
+            var fechaFin=new Date(this.state.fechaCalendarioFinal)
+            fechaInicio=(fechaInicio.getFullYear())+"-"+(("0" + (fechaInicio.getMonth() + 1)).slice(-2))+"-"+(("0" + (fechaInicio.getDate())).slice(-2))
+            fechaFin=(fechaFin.getFullYear())+"-"+(("0" + (fechaFin.getMonth() + 1)).slice(-2))+"-"+(("0" + (fechaFin.getDate())).slice(-2))
+            var CaleSecInicio=Date.parse(fechaInicio);
+            var CaleSecFin=Date.parse(fechaFin);
+
+        }else{
+            var CaleSecInicio=Date.parse(this.state.fechaCalendarioInicio);
+            var CaleSecFin=Date.parse(this.state.fechaCalendarioFinal);
+        }
+
         //hoy = ((new Date()).toISOString()).split("T")[0]
-        var menorFechaInicioDeConsultaDeBdd=Date.parse("3970-01-01");
+        var menorFechaInicioDeConsultaDeBdd=Date.parse("2040-01-01");
         var mayorFechaInicioDeConsultaDeBdd=Date.parse("1970-01-01");
         var datosPorFecha=[];
         datosParaFiltar.forEach((dato)=>{            
             var fechaInterna=Date.parse(dato.fechaHora);
+            var fechaInternaS=Date.parse(dato.fechaHora.substr(0,10))
             try {
                 var inicio=Date.parse(dato.fechaHoraInicio);
                 var fin=Date.parse(dato.fechaHoraFin);
@@ -302,16 +340,16 @@ export default class ConsultarTransacciones extends React.Component {
                 menorFechaInicioDeConsultaDeBdd=fechaInterna;
             }
             //aplicando filtro de fechas, lo de arriba es otra cosa
-            if(CaleSecInicio<=fechaInterna && fechaInterna<=CaleSecFin)
+            if(CaleSecInicio<=fechaInternaS && fechaInternaS<=CaleSecFin)
                 {
                     datosPorFecha.push(dato)  
-            } else if(CaleSecFin<=fechaInterna && fechaInterna<=CaleSecInicio)
+            } else if(CaleSecFin<=fechaInternaS && fechaInternaS<=CaleSecInicio)
                 {
                     datosPorFecha.push(dato)
-            } else if(CaleSecInicio===fechaInterna && isNaN(CaleSecFin))
+            } else if(CaleSecInicio===fechaInternaS && isNaN(CaleSecFin))
                 {
                     datosPorFecha.push(dato)
-            } else if(CaleSecFin===fechaInterna && isNaN(CaleSecInicio))
+            } else if(CaleSecFin===fechaInternaS && isNaN(CaleSecInicio))
                 {
                     datosPorFecha.push(dato) 
             } else if (isNaN(CaleSecFin) && isNaN(CaleSecInicio)){
@@ -440,7 +478,7 @@ export default class ConsultarTransacciones extends React.Component {
                             tituloCalendarioFinal={"Fecha Final"}
                         />
                         {this.state.cantLlamadas && 
-                        <Box sx={{justifyContent: 'center',display: 'flex'}}>
+                        <Box sx={{justifyContent: 'center',display: 'flex',mt:2}}>
                             <VisibilityIcon/>
                             <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.state.cantLlamadas)}</Typography>
                         </Box>}
@@ -483,5 +521,3 @@ export default class ConsultarTransacciones extends React.Component {
       
     }
   }
-
-
