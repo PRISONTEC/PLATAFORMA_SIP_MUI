@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -32,9 +33,10 @@ const colorBlueCard4 = blue[400];
 const colorPurpleCard4 = purple[700];
 
 export default function RowCard() {
-
+  const [count, setCount] = useState(false);
   const scrollTo = () => {
     scroll.scrollTo(1500);
+    setCount(true);
   }
 
   return (
@@ -61,7 +63,7 @@ export default function RowCard() {
                   />
                 </ImageListItem>                      
               </ImageList>
-              <ImageList sx={{ m:0, display: { xs: 'felx', sm: 'flex', md: 'flex' }}}>
+              <ImageList sx={{ m:0, display: { xs: 'flex', sm: 'flex', md: 'flex' }}}>
                 <ImageListItem sx={{width:'266px'}}>
                   <img
                     src={Foto5}
@@ -87,25 +89,25 @@ export default function RowCard() {
 
             <div >
                   <div id='textoanalizadas'>
-                    <MyCard  firstText={"25756236"} secondText={"Llamadas Analizadas"} statusImage={RingVolumeIcon}/>                  
+                    <MyCard startCount={count} firstText={"25756236"} secondText={"Llamadas Analizadas"} statusImage={RingVolumeIcon}/>                  
                   </div>         
             </div>
 
             <div class="texto1">
                   <div id='penitenciariatexto'>
-                    <MyCard  firstText={"50252"} secondText={"Internos"} statusImage={AssignmentIndIcon}/>                  
+                    <MyCard startCount={count} firstText={"50252"} secondText={"Internos"} statusImage={AssignmentIndIcon}/>                  
                   </div>         
             </div>
 
             <div class="texto2">
                   <div id='penitenciariatexto'>
-                    <MyCard  firstText={"1627"} secondText={"Teléfonos Públicos"} statusImage={PhoneIcon}/>                  
+                    <MyCard startCount={count} firstText={"1627"} secondText={"Teléfonos Públicos"} statusImage={PhoneIcon}/>                  
                   </div>         
             </div>           
 
             <div class="texto3">
                   <div id='penitenciariatexto'>
-                    <MyCard  firstText={"28"} secondText={"Penitenciarías"} statusImage={AccountBalanceIcon}/>                  
+                    <MyCard startCount={count} firstText={"28"} secondText={"Penitenciarías"} statusImage={AccountBalanceIcon}/>                  
                   </div>         
             </div>
           </div>
