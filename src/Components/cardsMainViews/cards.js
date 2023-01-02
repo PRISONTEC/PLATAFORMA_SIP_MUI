@@ -27,25 +27,14 @@ export default function myCard(props) {
     }
   
     return (
-      <Box sx={{display: { xs: 'flex', md: 'flex' }, direction:'column', justifyContent:'center', pt:'15px' }}>
-        <Card row sx={{ width: 260, bgcolor: props.colorCard}}>
-          <CardOverflow>
-            <AspectRatio ratio="1" sx={{ width: 90 }}>
-              <IconButton
-                size="large"
-                aria-haspopup="true"
-              >
-                <StatusImage sx ={[{fontSize: 60, color: props.colorIcon}]} /> 
-                
-              </IconButton>
-            </AspectRatio>
-          </CardOverflow>
+      <Box sx={{display: { xs: 'flex', md: 'flex' }, direction:'column', justifyContent:'right', pt:'15px' }}>
+        <Box row sx={{ width: 260, bgcolor: props.colorCard}}>
           <CardContent sx={{ px: 2 }}>
             <ThemeProvider theme={theme}>
-            <Typography sx={{justifyContent:'center'}}> <CountUp end={props.firstText}  separator="," /> </Typography>
+            <Typography sx={{justifyContent:'center'}} variant="h4"> <CountUp end={props.firstText}  separator="," /> </Typography>
             </ThemeProvider>
             <ThemeProvider theme={theme}>
-              <Typography> {props.secondText} </Typography>
+              <Typography variant="h6"> {props.secondText} </Typography>
             </ThemeProvider>
           </CardContent>
           <Divider />
@@ -62,9 +51,9 @@ export default function myCard(props) {
               textTransform: 'uppercase',
             }}
           >
-            SIP
+
           </CardOverflow>
-        </Card>
+        </Box>
       </Box>
     );
   }

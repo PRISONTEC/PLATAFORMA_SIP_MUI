@@ -1,0 +1,102 @@
+#texto{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: 3px;
+    left: 10px;
+    color:#0A0C6C;
+  }
+
+#divPadre {
+height:50px;
+width:400px;
+text-align:center;
+}
+
+#textoanalizadas{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: -450px;
+    left:80px;
+    color:#1283EE;  
+}
+
+#llamadasAnalizadas{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: -15px;
+}
+
+#internos{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: 3px;
+    left: 0px;
+    color:#0A0C6C;
+}
+
+#group{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: -8px;
+}
+
+#publicostexto{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: -16px;
+    left: 0px;
+    color:#0A0C6C;
+}
+
+#publicosimagen{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: -30px;
+}
+
+#penitenciariatexto{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: 10px;
+    left: -50px;
+    color:#0A0C6C;
+}
+
+#penitenciariaimagen{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: 0px;
+    left: -55px;
+}
+
+.caja{
+    position: relative;
+    display: inline-block;
+}
+
+.texto1{
+    position: absolute;
+    top: 90px;
+    left: 130px;
+}
+
+.texto2{
+    position: absolute;
+    top: 190px;
+    left: 130px;
+}
+
+.texto3{
+    position: absolute;
+    top: 310px;
+    left: 130px;
+}

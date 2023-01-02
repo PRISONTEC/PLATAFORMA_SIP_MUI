@@ -9,6 +9,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Outlet, useNavigate} from "react-router-dom";
 import { createTheme, ThemeProvider, Typography } from  "@mui/material";
+import LetraS from '../assets/images/logoSip.png';
 
 
 const modules = ['INICIO','BUSQUEDA POR INTERNO','BUSQUEDA POR DESTINO'];
@@ -62,6 +63,14 @@ const handleClose = () => {
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, justifyContent: 'left' }}>
+              <Box sx={{ m:1,mr:2, display: { xs: 'flex', md: 'flex' }, justifyContent: 'left' }}>
+                  <img src={LetraS}></img>
+              </Box>
+                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, justifyContent: 'center', pt: '11px' }}>
+                    <Typography 
+                      textAlign="left" style={{color: '#04264f'}}> Sistema de Inteligencia Penitenciaria
+                    </Typography>
+                </Box>
                 <IconButton
                   size="large"
                   aria-controls="menu-appbar"
@@ -97,11 +106,6 @@ const handleClose = () => {
                     </MenuItem>
                   ))}
                 </Menu>
-                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, justifyContent: 'center', pt: '11px' }}>
-                  <Typography 
-                    textAlign="center" style={{color: 'blue'}}> SISTEMA DE INTELIGENCIA PENITENCIARIA
-                  </Typography>
-                </Box>
               </Box>
             </Toolbar>
           </Container>

@@ -6,8 +6,17 @@ import RingVolumeIcon from '@mui/icons-material/RingVolume';
 import BoxPt from './BoxPt'
 import Box from '@mui/material/Box';
 import { blue, purple } from '@mui/material/colors';
-
-import MyCard from "./cardsMainViews/cards"
+import asterisco from '../../src/assets/images/asterisco.png';
+import '../../src/assets/css/diseNuevo.css';
+import MyCard from "./cardsMainViews/cards";
+import fondopiepagina from '../../src/assets/images/fondopiepagina.png'
+import tiemporeal from '../../src/assets/images/tiemporeal.png'
+import {Grid} from '@material-ui/core';
+import Foto1 from '../../src/assets/images/FOTO1.png';
+import Foto2 from '../../src/assets/images/FOTO2.png';
+import Foto3 from '../../src/assets/images/formas.png';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
 
 const colorBlueCard1 = blue[100];
@@ -25,12 +34,66 @@ const colorPurpleCard4 = purple[700];
 export default function RowCard() {
 
   return (
-        <Box sx={{display: { xs: 'flex', md: 'flex' }, flexDirection:'column', justifyContent:'center', pt:'20px' }}>
-          <MyCard colorCard={colorBlueCard1} colorIcon={colorPurpleCard1} firstText={"28"} secondText={"PENALES"} statusImage={AccountBalanceIcon}/>
-          <MyCard colorCard={colorBlueCard2} colorIcon={colorPurpleCard2} firstText={"50252"} secondText={"INTERNOS"} statusImage={AssignmentIndIcon}/>
-          <MyCard colorCard={colorBlueCard3} colorIcon={colorPurpleCard3} firstText={"25756236"} secondText={"LLAMADAS"} statusImage={RingVolumeIcon}/>
-          <MyCard colorCard={colorBlueCard4} colorIcon={colorPurpleCard4} firstText={"1627"} secondText={"TELEFONOS ANALIZADOS"} statusImage={PhoneIcon}/>
-               
-        </Box>   
+        <Box sx={{display: { xs: 'flex', sm: 'flex', md: 'flex' }, flexDirection:'column', justifyContent:'center', pt:'20px',alignItems:"center" }}>
+            
+            <Box sx={{width:'400px',justifyContent:'center'}}>
+                <ImageList sx={{ width: '100%',m:0, display: { xs: 'block', sm: 'block', md: 'block' } }} cols={1} >
+              <ImageListItem >
+                <img
+                  src={Foto1}
+                  alt="telefono"
+                />
+              </ImageListItem>
+              <ImageListItem >
+                <img
+                  src={Foto2}
+                  alt="llamada"
+                />
+              </ImageListItem>
+              <ImageListItem sx={{mt:-10}}>
+                <img
+                  src={Foto3}
+                  alt="bloques"
+                />
+              </ImageListItem>                      
+            </ImageList>
+          </Box>
+
+            <div id="divPadre">
+              <img src={tiemporeal} ></img>
+            </div> 
+
+          <div class='caja'>
+            <img src={fondopiepagina} ></img>
+
+            <div >
+                  <div id='textoanalizadas'>
+                    <MyCard  firstText={"25756236"} secondText={"Llamadas Analizadas"} statusImage={RingVolumeIcon}/>                  
+                  </div>         
+            </div>
+
+            <div class="texto1">
+                  <div id='penitenciariatexto'>
+                    <MyCard  firstText={"50252"} secondText={"Internos"} statusImage={AssignmentIndIcon}/>                  
+                  </div>         
+            </div>
+
+            <div class="texto2">
+                  <div id='penitenciariatexto'>
+                    <MyCard  firstText={"1627"} secondText={"Teléfonos Públicos"} statusImage={PhoneIcon}/>                  
+                  </div>         
+            </div>           
+
+            <div class="texto3">
+                  <div id='penitenciariatexto'>
+                    <MyCard  firstText={"28"} secondText={"Penitenciarías"} statusImage={AccountBalanceIcon}/>                  
+                  </div>         
+            </div>
+          </div>
+
+            
+        </Box> 
+
   );
+  
 }
