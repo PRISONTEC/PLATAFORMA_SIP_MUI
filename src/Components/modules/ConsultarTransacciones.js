@@ -25,8 +25,10 @@ export default class ConsultarTransacciones extends React.Component {
             cantRecargas:null,
             cantLlamadas:null,
             infoInternos:[],
-            numeroCelular : "013119898",
-            idInterno : "44252489",
+            numeroCelular : "",
+            defaultNumeroCelular: "013119898",
+            idInterno : "",
+            defaultIdInterno:"44252489",
             penal:{101:"CAÑETE",102:"HUARAL",103:"CALLAO",104:"ICA",105:"CHINCHA",106:"HUACHO",107:"ANCON 2",108:"CASTRO",109:"ANCON",
                 110:"LURIGANCHO",111:"TRUJILLO",112:"CHIMBOTE",113:"HUARAZ",114:"CHICLAYO",115:"TUMBES",116:"AYACUCHO",117:"HUANCAYO",118:"HUANUCO",
                 119:"CAJAMARCA",120:"CHANCHAMAYO",121:"CHORRILLOS",122:"CUSCO",123:"PUERTO MALDONADO",124:"TACNA",125:"PUNO",126:"JULIACA",127:"TARAPOTO",
@@ -216,7 +218,8 @@ export default class ConsultarTransacciones extends React.Component {
                 actualizarFechaEnElComponenteHijo: true,
                 fechaCalendarioInicio: null,
                 fechaCalendarioFinal: null,
-                idInterno:null
+                idInterno:null,
+                defaultIdInterno:"",
             });
     
             this.obtenerTransaccionPorInterno((data) => {
@@ -235,7 +238,8 @@ export default class ConsultarTransacciones extends React.Component {
                 actualizarFechaEnElComponenteHijo: true,
                 fechaCalendarioInicio: null,
                 fechaCalendarioFinal: null,
-                numeroCelular: null
+                numeroCelular: null,
+                defaultNumeroCelular:""
             });
                 this.obtenerTransaccionPorCelular((data) => { 
                     this.setState({
@@ -439,7 +443,7 @@ export default class ConsultarTransacciones extends React.Component {
                                     this.props.buscarPor==="interno" &&
                                     <Grid item xs={12} sm={6} md={6}>
                                         <Buscador nombreLabel="Interno"
-                                                valorDefault={this.state.idInterno}
+                                                valorDefault={this.state.defaultIdInterno}
                                                 nombreBoton="" 
                                                 nameLabel={"ID Interno"}
                                                 recuperarIdInterno={this.recuperarIdInterno}
@@ -450,7 +454,7 @@ export default class ConsultarTransacciones extends React.Component {
                                     this.props.buscarPor==="celular" &&
                                     <Grid item xs={12} sm={6} md={6}>
                                         <Buscador nombreLabel="Celular"
-                                            valorDefault={this.state.numeroCelular}
+                                            valorDefault={this.state.defaultNumeroCelular}
                                             nombreBoton="" 
                                             nameLabel={"por número destino"}
                                             recuperarIdInterno={this.recuperarNumeroCelular}
