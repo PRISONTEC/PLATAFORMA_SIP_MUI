@@ -423,7 +423,6 @@ export default class ConsultarTransacciones extends React.Component {
         )
     }
     render() {      
-        if (this.state.loaded === true) {
             return (
                 <>
                     <Box sx={{mt:2}}>
@@ -471,57 +470,56 @@ export default class ConsultarTransacciones extends React.Component {
 
                             </Grid>
                         </Box>
-                        <FiltrarDatos 
-                            buscar={this.botonAplicarFiltro}
-                            valueIdInterno={this.state.idInterno}
-                            recuperarFechaCalendarioInicio={this.recuperarFechaCalendarioInicio} 
-                            fechaCalendarioSecundarioInicio={this.state.fechaCalendarioInicio}
-                            tituloCalendarioInicio={"Fecha Inicio"}
-                            recuperarFechaCalendarioFinal={this.recuperarFechaCalendarioFinal} 
-                            fechaCalendarioSecundarioFinal={this.state.fechaCalendarioFinal}
-                            tituloCalendarioFinal={"Fecha Final"}
-                        />
-                        {this.state.cantLlamadas && 
-                        <Box sx={{justifyContent: 'center',display: 'flex',mt:2}}>
-                            <VisibilityIcon/>
-                            <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.state.cantLlamadas)}</Typography>
-                        </Box>}
-                        {this.props.infoInternoSeleccionado && 
-                            <Box sx={{justifyContent: 'center'}}>
-                                <Box sx={{m:2, textTransform: 'capitalize',flexDirection: 'row',display: 'flex',justifyContent: 'center'}}>
-                                    <AccountBalanceIcon/>                  
-                                    <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.props.infoPenalSeleccionado)}</Typography>
-                                </Box> 
-                                <Box sx={{m:2, textTransform: 'capitalize',flexDirection: 'row',display: 'flex',justifyContent: 'center'}}>
-                                    <AccessibilityNewIcon/>  
-                                    <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.props.infoInternoSeleccionado)}</Typography>
+                        {this.state.loaded && <>
+                            <FiltrarDatos 
+                                buscar={this.botonAplicarFiltro}
+                                valueIdInterno={this.state.idInterno}
+                                recuperarFechaCalendarioInicio={this.recuperarFechaCalendarioInicio} 
+                                fechaCalendarioSecundarioInicio={this.state.fechaCalendarioInicio}
+                                tituloCalendarioInicio={"Fecha Inicio"}
+                                recuperarFechaCalendarioFinal={this.recuperarFechaCalendarioFinal} 
+                                fechaCalendarioSecundarioFinal={this.state.fechaCalendarioFinal}
+                                tituloCalendarioFinal={"Fecha Final"}
+                            />
+                            {this.state.cantLlamadas && 
+                            <Box sx={{justifyContent: 'center',display: 'flex',mt:2}}>
+                                <VisibilityIcon/>
+                                <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.state.cantLlamadas)}</Typography>
+                            </Box>}
+                            {this.props.infoInternoSeleccionado && 
+                                <Box sx={{justifyContent: 'center'}}>
+                                    <Box sx={{m:2, textTransform: 'capitalize',flexDirection: 'row',display: 'flex',justifyContent: 'center'}}>
+                                        <AccountBalanceIcon/>                  
+                                        <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.props.infoPenalSeleccionado)}</Typography>
+                                    </Box> 
+                                    <Box sx={{m:2, textTransform: 'capitalize',flexDirection: 'row',display: 'flex',justifyContent: 'center'}}>
+                                        <AccessibilityNewIcon/>  
+                                        <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.props.infoInternoSeleccionado)}</Typography>
+                                    </Box>
                                 </Box>
-                            </Box>
-                        }
-                        <Box>                        
-                        <Grid item xs={12}>
-                            {this.state.mostrarTabla==="recargas" &&
-                                <TablaReact 
-                                    columnas={this.state.columnasRecargas} 
-                                    datos={this.state.recargas}
-                                    recuperarIndice={this.recuperarIndiceTocadoEnTablaRecargas}
-                                />
                             }
-                            {this.state.mostrarTabla==="llamadas" &&
-                                <TablaReact 
-                                    columnas={this.state.columnasLlamadas} 
-                                    datos={this.state.llamadas}
-                                    recuperarIndice={this.recuperarIndiceTocadoEnTablaLlamadas}
-                                    />}
-                        </Grid>
-                        </Box>
+                            <Box>                        
+                            <Grid item xs={12}>
+                                {this.state.mostrarTabla==="recargas" &&
+                                    <TablaReact 
+                                        columnas={this.state.columnasRecargas} 
+                                        datos={this.state.recargas}
+                                        recuperarIndice={this.recuperarIndiceTocadoEnTablaRecargas}
+                                    />
+                                }
+                                {this.state.mostrarTabla==="llamadas" &&
+                                    <TablaReact 
+                                        columnas={this.state.columnasLlamadas} 
+                                        datos={this.state.llamadas}
+                                        recuperarIndice={this.recuperarIndiceTocadoEnTablaLlamadas}
+                                        />}
+                            </Grid>
+                            </Box>
+                        </>}
+                        {!this.state.loaded && < LoadingPage />}
                     </Box> 
                 </>
             );
-    } else {
-        // Loading...
-        return < LoadingPage />
-    }
       
     }
   }
