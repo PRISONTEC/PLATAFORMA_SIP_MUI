@@ -25,9 +25,9 @@ export default class ConsultarTransacciones extends React.Component {
             cantRecargas:null,
             cantLlamadas:null,
             infoInternos:[],
-            numeroCelular : "",
+            numeroCelular : this.props.investigarDestino? this.props.investigarDestino : "",
             defaultNumeroCelular: "013119898",
-            idInterno : "",
+            idInterno : this.props.investigarInterno ? this.props.investigarInterno : "",
             defaultIdInterno:"44252489",
             penal:{101:"CAÑETE",102:"HUARAL",103:"CALLAO",104:"ICA",105:"CHINCHA",106:"HUACHO",107:"ANCON 2",108:"CASTRO",109:"ANCON",
                 110:"LURIGANCHO",111:"TRUJILLO",112:"CHIMBOTE",113:"HUARAZ",114:"CHICLAYO",115:"TUMBES",116:"AYACUCHO",117:"HUANCAYO",118:"HUANUCO",
@@ -123,6 +123,19 @@ export default class ConsultarTransacciones extends React.Component {
         this.obtenerNombreDeInterno = this.obtenerNombreDeInterno.bind(this);
         this.secondsToString = this.secondsToString.bind(this);
     }
+    //"componentDidMount" es necesario solamente por el modulo investigación
+
+    componentDidMount() {
+        if(this.props.investigarInterno){
+            console.log(this.props.investigarInterno);
+            this.props.setInvestigarInterno(null);
+            this.cargarDatosDeInterno();           
+        } else if(this.props.investigarDestino){
+            console.log(this.props.investigarDestino);
+            this.props.setInvestigarDestino(null);
+            this.cargarDatosNumeroCelular();
+        }
+      }
     // con este callback se actuliza la variable desde el hijo "Buscador"
     recuperarIdInterno(callback){
         this.setState({
@@ -182,6 +195,9 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     obtenerNombreDeInterno(index,datos){
+        console.log("holiiii",index,datos);
+        this.props.actualizarInfoInterno(null);
+        this.props.actualizarInfoPenal(null);     
         datos.every((dato)=>{
             if(dato.index===index){
                 this.obtenerTransaccionPorNombreInterno((info) => {
@@ -195,8 +211,7 @@ export default class ConsultarTransacciones extends React.Component {
                         this.props.actualizarInfoInterno("No se encontró coincidencia...")
                         this.props.actualizarInfoPenal(null)
                     }         
-                },dato.idInterno)  
-                         
+                },dato.idInterno)     
                 return false
             }
             return true;
@@ -226,7 +241,7 @@ export default class ConsultarTransacciones extends React.Component {
                 this.setState({
                     datos: data,
                 })
-                this.filtrarDatosPorFechaSeleccionada(data.items)
+                this.filtrarDatosPorFechaSeleccionada(data.items);                
             })
         }                     
     }
@@ -369,7 +384,7 @@ export default class ConsultarTransacciones extends React.Component {
         }
         this.separarRecargasDeLlamadas(datosPorFecha);                    
     }
-
+    // Con esta funcion termina el render(lo que muestra en la tabla)
     separarRecargasDeLlamadas(datos){
         var recargas = [];
         var llamadas = [];
@@ -398,7 +413,13 @@ export default class ConsultarTransacciones extends React.Component {
             filtrarDatosPorFechaSeleccionada:null,        
             loaded: true,
         });
-
+        // Aqui mostramos el nombre y el penal del interno sin necesidad de presionar el boton info en la tabla
+        if(this.props.buscarPor==="interno"){
+            //para obtener el nombre necesita el indice y el vector de donde sacará el codAzulito
+            // ej: ["48339906","4899060600"] , indice=0
+            // reutilizamos codigo 
+            this.obtenerNombreDeInterno(0,llamadas)
+        }
     }
 
     obtenerTransaccionPorNombreInterno(callback, idInterno) {

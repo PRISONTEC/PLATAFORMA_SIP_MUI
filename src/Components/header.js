@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider, Typography } from  "@mui/material";
 import LetraS from '../assets/images/logoSip.png';
 
 
-const modules = ['INICIO','BUSQUEDA POR INTERNO','BUSQUEDA POR DESTINO'];
+const modules = ['INICIO','BUSQUEDA POR INTERNO','BUSQUEDA POR DESTINO','INVESTIGACION'];
 
 const theme = createTheme({
   typography: {
@@ -44,6 +44,9 @@ const ResponsiveHeader = (props) => {
     } else if(navegador==='BUSQUEDA POR DESTINO'){
       props.elijeBusquedaYactulizaNombre("celular",null,null); 
       navigate("/extorsion");
+    } else if(navegador==='INVESTIGACION'){
+      //props.elijeBusquedaYactulizaNombre("investigacion",null,null); 
+      navigate("/investigacion");
     } else{
       navigate("/Errorpage");
     }
