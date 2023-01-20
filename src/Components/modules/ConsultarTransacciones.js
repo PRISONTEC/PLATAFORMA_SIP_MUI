@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Excel from '../excel';
 
 export default class ConsultarTransacciones extends React.Component { 
     
@@ -43,6 +44,10 @@ export default class ConsultarTransacciones extends React.Component {
             actualizarFechaEnElComponenteHijo:true,
             fechaCalendarioSecundarioInicio:null,
             fechaCalendarioSecundarioFinal:null,
+            excelBuscarPorDestino:"Busqueda por número de destino",
+            excelBuscarPorIdInterno:"Busqueda por ID Interno",
+            excelInterno:"interno",
+            excelDestino:"destino",
             columnasLlamadas:[     
                   {
                     width: 200,
@@ -489,6 +494,26 @@ export default class ConsultarTransacciones extends React.Component {
                                     itemSeleccionado={this.recuperarRadioGroupSeleccionado}
                                     />
                                 </Grid>
+                                {
+                                this.props.buscarPor==="interno" &&
+                                <Grid item xs={6} sm={2} md={2}>                                  
+                                    <Excel
+                                    llamadasInterno={this.state.llamadas}
+                                    excelBuscarPorIdInterno={this.state.excelBuscarPorIdInterno}
+                                    excelInterno={this.state.excelInterno}
+                                    />
+                                </Grid>
+                                }
+                                {
+                                this.props.buscarPor==="celular" &&
+                                <Grid item xs={6} sm={2} md={2}>                                  
+                                    <Excel  
+                                    llamadasInterno={this.state.llamadas}
+                                    excelBuscarPorDestino={this.state.excelBuscarPorDestino}
+                                    excelDestino={this.state.excelDestino}
+                                    />
+                                </Grid>
+                                }
 
                             </Grid>
                         </Box>
