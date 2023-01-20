@@ -4,13 +4,13 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Outlet, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 export default function BasicSelect(props) {
   const [interno, setInterno] = React.useState('');
   const [destino, setDestino] = React.useState('');
-  const internos = ["48339906","48060600"];
-  const destinos = ["925537527","976471136"];
+  const internos = ["29990499","44252489","45917297"];
+  const destinos = ["944221297","963707507","974581291"];
   const navigate = useNavigate();
 
   const handleChangeInterno = (event) => {
@@ -40,6 +40,7 @@ export default function BasicSelect(props) {
                 >
                 <MenuItem value={internos[0]}>{internos[0]}</MenuItem>
                 <MenuItem value={internos[1]}>{internos[1]}</MenuItem>
+                <MenuItem value={internos[2]}>{internos[2]}</MenuItem>
                 </Select>
             </FormControl>
         </Box>
@@ -55,6 +56,7 @@ export default function BasicSelect(props) {
                 >
                 <MenuItem value={destinos[0]}>{destinos[0]}</MenuItem>
                 <MenuItem value={destinos[1]}>{destinos[1]}</MenuItem>
+                <MenuItem value={destinos[2]}>{destinos[2]}</MenuItem>
                 </Select>
             </FormControl>
         </Box>

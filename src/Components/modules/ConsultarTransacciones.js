@@ -194,10 +194,7 @@ export default class ConsultarTransacciones extends React.Component {
         this.obtenerNombreDeInterno(callback,this.state.llamadas)
     }
 
-    obtenerNombreDeInterno(index,datos){
-        console.log("holiiii",index,datos);
-        this.props.actualizarInfoInterno(null);
-        this.props.actualizarInfoPenal(null);     
+    obtenerNombreDeInterno(index,datos){            
         datos.every((dato)=>{
             if(dato.index===index){
                 this.obtenerTransaccionPorNombreInterno((info) => {
@@ -227,6 +224,8 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     cargarDatosDeInterno(){
+        this.props.actualizarInfoInterno(null);
+        this.props.actualizarInfoPenal(null); 
         if(this.state.idInterno){
             this.setState({
                 loaded : false,            
@@ -247,6 +246,8 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     cargarDatosNumeroCelular(){
+        this.props.actualizarInfoInterno(null);
+        this.props.actualizarInfoPenal(null); 
         if(this.state.numeroCelular){
             this.setState({
                 loaded : false,
