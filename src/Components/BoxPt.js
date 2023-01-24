@@ -10,7 +10,6 @@ export default function GuestFooter() {
   const [mostrar,setMostrar] = useState(true)  
   const escucharOrientacion = (event) =>{
     const dim = Dimensions.get('screen');
-    console.log("event: ", event.currentTarget.innerHeight);
     if(event.currentTarget.innerHeight>600){
       setMostrar(true)
     } else {

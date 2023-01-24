@@ -30,7 +30,7 @@ export default class ConsultarTransacciones extends React.Component {
             defaultNumeroCelular: "013119898",
             idInterno : this.props.investigarInterno ? this.props.investigarInterno : "",
             defaultIdInterno:"44252489",
-            penal:{101:"CAÑETE",102:"HUARAL",103:"CALLAO",104:"ICA",105:"CHINCHA",106:"HUACHO",107:"ANCON 2",108:"CASTRO",109:"ANCON",
+            penal:{100:"SURCO",101:"CAÑETE",102:"HUARAL",103:"CALLAO",104:"ICA",105:"CHINCHA",106:"HUACHO",107:"ANCON 2",108:"CASTRO",109:"ANCON",
                 110:"LURIGANCHO",111:"TRUJILLO",112:"CHIMBOTE",113:"HUARAZ",114:"CHICLAYO",115:"TUMBES",116:"AYACUCHO",117:"HUANCAYO",118:"HUANUCO",
                 119:"CAJAMARCA",120:"CHANCHAMAYO",121:"CHORRILLOS",122:"CUSCO",123:"PUERTO MALDONADO",124:"TACNA",125:"PUNO",126:"JULIACA",127:"TARAPOTO",
                 128:"MOYOBAMBA",129:"CHACHAPOYAS"},
@@ -132,11 +132,11 @@ export default class ConsultarTransacciones extends React.Component {
 
     componentDidMount() {
         if(this.props.investigarInterno){
-            console.log(this.props.investigarInterno);
+            //console.log(this.props.investigarInterno);
             this.props.setInvestigarInterno(null);
             this.cargarDatosDeInterno();           
         } else if(this.props.investigarDestino){
-            console.log(this.props.investigarDestino);
+            //console.log(this.props.investigarDestino);
             this.props.setInvestigarDestino(null);
             this.cargarDatosNumeroCelular();
         }
@@ -188,13 +188,11 @@ export default class ConsultarTransacciones extends React.Component {
 
     // obteniendo nombres de internos
     recuperarIndiceTocadoEnTablaRecargas(callback){
-        console.log("indice transacciones: ",callback)
         this.setState({indiceTocadoEnTablaRecargas:callback});
         this.obtenerNombreDeInterno(callback,this.state.recargas)
     }
 
     recuperarIndiceTocadoEnTablaLlamadas(callback){
-        console.log("indice transacciones: ",callback)
         this.setState({indiceTocadoEnTablaLlamadas:callback});
         this.obtenerNombreDeInterno(callback,this.state.llamadas)
     }
@@ -204,7 +202,6 @@ export default class ConsultarTransacciones extends React.Component {
             if(dato.index===index){
                 this.obtenerTransaccionPorNombreInterno((info) => {
                     try{
-                        console.log(String(info.items[0].nombres))
                         this.props.actualizarInfoInterno(String(info.items[0].nombres))
                         this.props.actualizarInfoPenal(String(this.state.penal[info.items[0].prefijoPenal]))                        
   
@@ -306,9 +303,6 @@ export default class ConsultarTransacciones extends React.Component {
       }
 
     filtrarDatosPorFechaSeleccionada(datosParaFiltar){
-        console.log("this.state.fechaCalendarioInicio",this.state.fechaCalendarioInicio)
-        console.log("this.state.fechaCalendarioFinal",this.state.fechaCalendarioFinal)
-
         if (this.state.fechaCalendarioInicio!=null && this.state.fechaCalendarioFinal===null){
             var CaleSecFin=Date.parse(this.state.fechaCalendarioFinal)
             var fechaInicio=new Date(this.state.fechaCalendarioInicio)
@@ -408,7 +402,6 @@ export default class ConsultarTransacciones extends React.Component {
                 recargas.push(dato)
             }
         })
-        console.log("cantidad de llamadas: ", indiceLlamadas);
         this.setState({
             recargas:recargas,
             llamadas:llamadas,
@@ -429,7 +422,6 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     obtenerTransaccionPorNombreInterno(callback, idInterno) {
-        console.log("idInterno: ", idInterno)
         fetchData.getData("https://"+this.state.ip +":2500",
             "/SIP/byKeyNombre?idInterno="+ idInterno,
             callback

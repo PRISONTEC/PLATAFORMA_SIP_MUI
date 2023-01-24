@@ -15,7 +15,6 @@ export default class FiltrarDatos extends React.Component {
       this.setState({value: event.target.value});
       //actualiza el dato ingresado en el padre
       this.props.getInput(event.target.value);
-      console.log("default: ", this.props.valorDefault);
     }
   
     render() {

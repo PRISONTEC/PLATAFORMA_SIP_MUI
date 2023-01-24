@@ -3,7 +3,6 @@ import React from 'react';
 import ButtonComponent from './ButtonComponent';
 import InputComponent from './InputComponent';
 import SearchIcon from '@mui/icons-material/Search';
-import IconComponent from './IconComponent';
 
 export default class Buscador extends React.Component {
     constructor(props) {

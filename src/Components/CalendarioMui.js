@@ -9,10 +9,8 @@ export default function MaterialUIPickers(props) {
   const [value, setValue] = React.useState(dayjs(props.fechaCalendarioSecundario || new Date()));
   const handleChange = (newValue) => {
     try {
-        console.log("value",newValue['$d'])
         props.recuperarFechaCalendario((newValue['$d']));
     } catch{
-        console.log("fecha invalida, la estan borrando...")
         props.recuperarFechaCalendario(null)
     }  
     setValue(newValue);

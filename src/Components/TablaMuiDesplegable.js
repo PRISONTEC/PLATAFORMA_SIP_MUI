@@ -10,8 +10,6 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Box from '@mui/material/Box';
-import  Grid from "@material-ui/core";
-import { AutoSizer, List } from "react-virtualized";
 //import { Column, Table, SortDirection, AutoSizer } from "react-virtualized";
 
 const useStyles = makeStyles({
@@ -62,7 +60,6 @@ export default function SimpleTable(props) {
           <TableCell component="th" scope="row">
               </TableCell>
               {props.columnas.map((columna,i)=>{
-                  console.log("columna",columna);
                   return(
                        <TableCell key={i} align="right">{columna.label}</TableCell>
                   )

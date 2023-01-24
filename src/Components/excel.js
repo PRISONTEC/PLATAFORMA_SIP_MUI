@@ -7,7 +7,6 @@ const ExcelSheet = ExportExcel.ExcelSheet;  // Una hoja de excel
 const ExcelColumn = ExportExcel.ExcelColumn; // Una conlumna de excel
 
 function Excel(props){
-    console.log(props.excelBuscarPorDestino)
     return(
     <>
     {

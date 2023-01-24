@@ -17,7 +17,6 @@ function App() {
     setInfoInterno(nombreInterno);
     setInfoPenal(penal)
   }
-  console.log("seleccion: ", seleccion);
   return (
     
       <React.StrictMode>
