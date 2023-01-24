@@ -16,7 +16,7 @@ const modules = ['INICIO','BUSQUEDA POR INTERNO','BUSQUEDA POR DESTINO','INVESTI
 
 const theme = createTheme({
   typography: {
-    fontFamily: ['Monserrat', 'sans-serif'].join(","),
+    fontFamily: ['PT Serif', 'serif'].join(","),
     fontSize: 13,
     textAlign:"center"
   },
@@ -70,9 +70,11 @@ const handleClose = () => {
                   <img src={LetraS}></img>
               </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, justifyContent: 'center', pt: '11px' }}>
+                  <ThemeProvider theme={theme}>
                     <Typography 
                       textAlign="left" style={{color: '#04264f'}}> Sistema de Inteligencia Penitenciaria
                     </Typography>
+                  </ThemeProvider>
                 </Box>
                 <IconButton
                   size="large"

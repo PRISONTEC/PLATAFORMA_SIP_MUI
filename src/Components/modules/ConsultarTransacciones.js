@@ -20,7 +20,7 @@ export default class ConsultarTransacciones extends React.Component {
         super(props);
         this.state = {
             loaded: true,
-            ip:"192.237.253.176",
+            ip:"c38a2aa7ab14314e787920ba8d82ebd525145228.prisontec.xyz",
             indiceTocadoEnTablaLlamadas:null,
             indiceTocadoEnTablaRecargas:null,
             cantRecargas:null,
@@ -430,21 +430,21 @@ export default class ConsultarTransacciones extends React.Component {
 
     obtenerTransaccionPorNombreInterno(callback, idInterno) {
         console.log("idInterno: ", idInterno)
-        fetchData.getData("http://"+this.state.ip +":2500",
+        fetchData.getData("https://"+this.state.ip +":2500",
             "/SIP/byKeyNombre?idInterno="+ idInterno,
             callback
         )
     }
 
     obtenerTransaccionPorCelular(callback) {
-        fetchData.getData("http://"+this.state.ip +":2500",
+        fetchData.getData("https://"+this.state.ip +":2500",
             "/SIP/byKeyCelular?numeroCelular="+ this.state.numeroCelular,
             callback
         )
     }
 
     obtenerTransaccionPorInterno(callback) {
-        fetchData.getData("http://"+this.state.ip +":2500",
+        fetchData.getData("https://"+this.state.ip +":2500",
             "/SIP/byKeyInterno?idInterno=" + this.state.idInterno,
             callback
         )
