@@ -36,7 +36,7 @@ export default class ConsultarTransacciones extends React.Component {
                 128:"MOYOBAMBA",129:"CHACHAPOYAS"},
             datos: null,
             mostrarTabla:"llamadas",
-            openFilter:false,
+            disabledFilter:false,
             llamadas:[],
             recargas:[],
             fechaCalendarioInicio:null,
@@ -109,7 +109,6 @@ export default class ConsultarTransacciones extends React.Component {
                   },
             ]
         }
-        //console.log("props: ",props.buscarPor," state: ",this.state.mostrarBusquedaPor);
         this.obtenerTransaccionPorCelular = this.obtenerTransaccionPorCelular.bind(this)
         this.obtenerTransaccionPorInterno = this.obtenerTransaccionPorInterno.bind(this)
         this.cargarDatosDeInterno = this.cargarDatosDeInterno.bind(this)
@@ -132,11 +131,9 @@ export default class ConsultarTransacciones extends React.Component {
 
     componentDidMount() {
         if(this.props.investigarInterno){
-            //console.log(this.props.investigarInterno);
             this.props.setInvestigarInterno(null);
             this.cargarDatosDeInterno();           
         } else if(this.props.investigarDestino){
-            //console.log(this.props.investigarDestino);
             this.props.setInvestigarDestino(null);
             this.cargarDatosNumeroCelular();
         }
@@ -174,7 +171,7 @@ export default class ConsultarTransacciones extends React.Component {
 
     recuperarFechaCalendarioFinal(callback){
         if(callback!==null){
-        var fecha_formateada=callback      
+        var fecha_formateada=callback    
         this.setState({
             fechaCalendarioFinal:fecha_formateada,
             fechaCalendarioSecundarioFinal:fecha_formateada
@@ -197,11 +194,13 @@ export default class ConsultarTransacciones extends React.Component {
         this.obtenerNombreDeInterno(callback,this.state.llamadas)
     }
 
-    obtenerNombreDeInterno(index,datos){            
+    obtenerNombreDeInterno(index,datos){
+        console.log("obtenerNombreDeInterno","indice",index,"datos",datos);    
         datos.every((dato)=>{
             if(dato.index===index){
                 this.obtenerTransaccionPorNombreInterno((info) => {
                     try{
+                        console.log("actualizarInfoInterno",String(info.items[0].nombres));
                         this.props.actualizarInfoInterno(String(info.items[0].nombres))
                         this.props.actualizarInfoPenal(String(this.state.penal[info.items[0].prefijoPenal]))                        
   
@@ -284,12 +283,13 @@ export default class ConsultarTransacciones extends React.Component {
     }
 
     botonAplicarFiltro(){
-        this.setState({openFilter:false});
-        try{
+        this.setState({disabledFilter:false});
+        try{ 
             this.filtrarDatosPorFechaSeleccionada(this.state.datos.items); 
         }catch{
-            console.log("sin datos")
-        }       
+
+            console.log("sin datos",this.state.datos.items)
+        }      
     }
 
     secondsToString(seconds) {
@@ -325,17 +325,53 @@ export default class ConsultarTransacciones extends React.Component {
             var CaleSecFin=Date.parse(fechaFin);
 
         }else{
-            var CaleSecInicio=Date.parse(this.state.fechaCalendarioInicio);
-            var CaleSecFin=Date.parse(this.state.fechaCalendarioFinal);
+            //var CaleSecInicio=Date.parse(this.state.fechaCalendarioInicio);
+            //var CaleSecFin=Date.parse(this.state.fechaCalendarioFinal);
+            var CaleSecInicio=Date.parse("2000-01-01");
+            var CaleSecFin=Date.parse("2024-03-31");
+
         }
 
         //hoy = ((new Date()).toISOString()).split("T")[0]
-        var menorFechaInicioDeConsultaDeBdd=Date.parse("2040-01-01");
-        var mayorFechaInicioDeConsultaDeBdd=Date.parse("1970-01-01");
+        if (datosParaFiltar.length==0){
+            var menorFechaInicioDeConsultaDeBdd=Date.parse("2023-03-18");
+            var mayorFechaInicioDeConsultaDeBdd=Date.parse("2023-03-18");
+            this.setState({
+                disabledFilter:true
+            })
+        }else{
+            var menorFechaInicioDeConsultaDeBdd=Date.parse("2023-03-31");
+        var mayorFechaInicioDeConsultaDeBdd=Date.parse("2020-01-01");
+        this.setState({
+            disabledFilter:false
+        })
+        }
         var datosPorFecha=[];
-        datosParaFiltar.forEach((dato)=>{            
+        datosParaFiltar.forEach((dato)=>{   
+            if((dato.fechaHora).length==10){
+                var fechaHora = new Date(dato.fechaHora*1000);
+                dato.fechaHora = fechaHora.toJSON().split('T')[0] + " " + fechaHora.toJSON().split('T')[1].substring(0,8)
+            }else{
+                var fechaHora=dato.fechaHora;
+            }
+            
+            if((dato.fechaHoraInicio).length==10){
+                var fechaHoraInicio = new Date(dato.fechaHoraInicio*1000);
+                dato.fechaHoraInicio = fechaHoraInicio.toISOString().split('T')[0] + " " + fechaHoraInicio.toISOString().split('T')[1].substring(0,8)
+            }else{
+                var fechaHoraInicio=dato.fechaHoraInicio;
+            }
+
+            if((dato.fechaHoraFin).length==10){
+                var fechaHoraFin = new Date(dato.fechaHoraFin*1000);
+                dato.fechaHoraFin = fechaHoraFin.toJSON().split('T')[0] + " " + fechaHoraFin.toISOString().split('T')[1].substring(0,8)
+            }else{
+                var fechaHoraFin=dato.fechaHoraFin;
+            }
+       
             var fechaInterna=Date.parse(dato.fechaHora);
             var fechaInternaS=Date.parse(dato.fechaHora.substr(0,10))
+
             try {
                 var inicio=Date.parse(dato.fechaHoraInicio);
                 var fin=Date.parse(dato.fechaHoraFin);
@@ -351,6 +387,7 @@ export default class ConsultarTransacciones extends React.Component {
                 datosPorFecha.push(dato.duracion)
             }
             //obtener la mayor fecha de la consulta
+
             if(fechaInterna > mayorFechaInicioDeConsultaDeBdd){
                 mayorFechaInicioDeConsultaDeBdd=fechaInterna;
             }
@@ -388,9 +425,10 @@ export default class ConsultarTransacciones extends React.Component {
     separarRecargasDeLlamadas(datos){
         var recargas = [];
         var llamadas = [];
-        var indiceLlamadas= -1;
-        var indiceRecargas= -1;
+        var indiceLlamadas=0;
+        var indiceRecargas=0;
         datos.forEach((dato)=>{
+            
             if (dato.duracion){
                 indiceLlamadas=indiceLlamadas+1;
                 dato.index=indiceLlamadas;
@@ -398,15 +436,15 @@ export default class ConsultarTransacciones extends React.Component {
             }
             if (dato.monto){
                 indiceRecargas=indiceRecargas+1;
-                dato.index=indiceRecargas
+                dato.index=indiceRecargas;
                 recargas.push(dato)
             }
         })
         this.setState({
             recargas:recargas,
             llamadas:llamadas,
-            cantLlamadas:indiceLlamadas===-1?null:indiceLlamadas,
-            cantRecargas:indiceRecargas===-1?null:indiceRecargas,             
+            cantLlamadas:indiceLlamadas===0?null:indiceLlamadas,
+            cantRecargas:indiceRecargas===0?null:indiceRecargas,             
             filtrarPorInterno:null,
             filtrarPorDestino:null, 
             filtrarDatosPorFechaSeleccionada:null,        
@@ -417,7 +455,8 @@ export default class ConsultarTransacciones extends React.Component {
             //para obtener el nombre necesita el indice y el vector de donde sacará el codAzulito
             // ej: ["48339906","4899060600"] , indice=0
             // reutilizamos codigo 
-            this.obtenerNombreDeInterno(0,llamadas)
+            // 1 SIGNIFICA QUE MOSTRARA EL NOMBRE
+            this.obtenerNombreDeInterno(1,llamadas)
         }
     }
 
@@ -519,8 +558,9 @@ export default class ConsultarTransacciones extends React.Component {
                                 recuperarFechaCalendarioFinal={this.recuperarFechaCalendarioFinal} 
                                 fechaCalendarioSecundarioFinal={this.state.fechaCalendarioFinal}
                                 tituloCalendarioFinal={"Fecha Final"}
+                                disabledFilter={this.state.disabledFilter}
                             />
-                            {this.state.cantLlamadas && 
+                            {this.state.cantLlamadas &&
                             <Box sx={{justifyContent: 'center',display: 'flex',mt:2}}>
                                 <VisibilityIcon/>
                                 <Typography variant='p1' fontFamily='sans-serif' color='#5798F6'>{String(this.state.cantLlamadas)}</Typography>

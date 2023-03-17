@@ -24,14 +24,15 @@ export default class FiltrarDatos extends React.Component {
               <Grid item xs={12} sm={12} md={12}>
                 <IconButton aria-label="expand row" 
                     size="small" 
-                    onClick={ ()=>this.setState({openFilter:!this.state.openFilter}) } >
+                    onClick={ ()=>this.setState({openFilter:!this.state.openFilter}) } 
+                    disabled={this.props.disabledFilter}>
                     {this.state.openFilter ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     Click para aplicar filtros
                 </IconButton>                             
               </Grid>
             </Grid>
           </Box>
-          {this.state.openFilter && 
+          {this.state.openFilter  && 
             <Box sx={{ml:2}}>
               <Grid container justifyContent="center" alignItems="center">                
                 <Grid item xs={12} sm={6} md={4}>

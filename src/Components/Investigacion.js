@@ -9,8 +9,8 @@ import { useNavigate} from "react-router-dom";
 export default function BasicSelect(props) {
   const [interno, setInterno] = React.useState('');
   const [destino, setDestino] = React.useState('');
-  const internos = ["29990499","44252489","45917297"];
-  const destinos = ["944221297","963707507","974581291"];
+  const internos = ["43810950"];
+  const destinos = ["980531211"];
   const navigate = useNavigate();
 
   const handleChangeInterno = (event) => {
